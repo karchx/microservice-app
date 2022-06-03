@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  redis:
+    container_name: 'db-redis'
+    image: redis:alpine
+    ports:
+      - 6379:6379
+    volumes:
+      - ./docker/redis:/var/lib/redis
+    restart: unless-stopped
+
+  mongo:
+    container_name: 'db-mongo'
+    image: mongo
+    ports:
+      - 27017:27017
+    volumes:
+      - ./docker/mongo:/data/db
+    restart: unless-stopped
