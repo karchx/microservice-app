@@ -1,0 +1,6 @@
+{
+  "version": 2,
+  "projects": {
+    "microservice-app": "apps/microservice-app"
+  }
+}
