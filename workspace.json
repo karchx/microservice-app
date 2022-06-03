@@ -1,6 +1,7 @@
 {
   "version": 2,
   "projects": {
+    "auth": "libs/auth",
     "microservice-app": "apps/microservice-app"
   }
 }
