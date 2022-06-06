@@ -15,7 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@microservice-app/auth": ["libs/auth/src/index.ts"]
+      "@microservice-app/auth": ["libs/auth/src/index.ts"],
+      "@microservice-app/models": ["libs/models/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
