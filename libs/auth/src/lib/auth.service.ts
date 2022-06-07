@@ -1,12 +1,15 @@
 import { Injectable } from '@nestjs/common';
-import { TokenDto } from '@microservice-app/models'
+import { TokenDto, UserDto } from '@microservice-app/models';
 
 @Injectable()
 export class AuthService {
   /**
+   * @param user UserDto
    *
+   * @return Promise<TokenDto>
    */
-  async login(): Promise<TokenDto> {
-    return { access_token: '1111' }
+  async login(user: UserDto): Promise<TokenDto> {
+    const payload = { username: user.email, sub: user._id };
+    return { access_token: '1111' };
   }
 }
