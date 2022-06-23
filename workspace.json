@@ -3,6 +3,7 @@
   "projects": {
     "auth": "libs/auth",
     "microservice-app": "apps/microservice-app",
-    "models": "libs/models"
+    "models": "libs/models",
+    "shared": "libs/shared"
   }
 }

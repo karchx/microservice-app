@@ -16,7 +16,8 @@
     "baseUrl": ".",
     "paths": {
       "@microservice-app/auth": ["libs/auth/src/index.ts"],
-      "@microservice-app/models": ["libs/models/src/index.ts"]
+      "@microservice-app/models": ["libs/models/src/index.ts"],
+      "@microservice-app/shared": ["libs/shared/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

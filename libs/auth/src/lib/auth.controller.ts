@@ -8,6 +8,6 @@ export class AuthController {
 
   @Post('/login')
   async login(@Request() req): Promise<TokenDto> {
-    return this.authService.login(req.user);
+    return this.authService.login(req.body);
   }
 }
