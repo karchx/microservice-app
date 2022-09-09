@@ -24,7 +24,7 @@ export class AuthService {
 
   validateUser(username: string, password: string) {
     return this.promisifyHttpService
-      .get<UserDto | null >(`${this.userFeatureBaeUrl}/user/email/${username}`)
+      .get<UserDto | null>(`${this.userFeatureBaeUrl}/user/email/${username}`)
       .subscribe({
         next(value) {
           if (value && value.password === password) {

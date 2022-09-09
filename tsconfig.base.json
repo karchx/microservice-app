@@ -10,15 +10,27 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "esnext",
-    "lib": ["es2017", "dom"],
+    "lib": [
+      "es2017",
+      "dom"
+    ],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@microservice-app/auth": ["libs/auth/src/index.ts"],
-      "@microservice-app/models": ["libs/models/src/index.ts"],
-      "@microservice-app/shared": ["libs/shared/src/index.ts"]
+      "@microservice-app/auth": [
+        "libs/auth/src/index.ts"
+      ],
+      "@microservice-app/models": [
+        "libs/models/src/index.ts"
+      ],
+      "@microservice-app/shared": [
+        "libs/shared/src/index.ts"
+      ]
     }
   },
-  "exclude": ["node_modules", "tmp"]
+  "exclude": [
+    "node_modules",
+    "tmp"
+  ]
 }
