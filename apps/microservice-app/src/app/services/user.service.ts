@@ -1,21 +1,23 @@
+import { PromisifyHttpService } from '@microservice-app/shared';
 import { Injectable } from '@nestjs/common';
-
-interface LoginInput {
-  email: string;
-  password: string;
-}
+import { ConfigService } from '@nestjs/config';
+import { LoginInput } from '../models/login.input';
 
 @Injectable()
 export class UserService {
-  private mockData: LoginInput = {
-    email: 'teste@gmail.com',
-    password: '123456789',
-  };
+  userFeatureBaseUrl: string;
 
-  login(input: LoginInput): LoginInput {
-    if (input.email === this.mockData.email) {
-      return input;
-    }
-    return;
+  constructor(
+    private configService: ConfigService,
+    private promisifyHttp: PromisifyHttpService
+  ) {
+    this.userFeatureBaseUrl = this.configService.get<string>(
+      'features.user.baseUrl'
+    );
+  }
+
+  async login(input: LoginInput) {
+    const url = `${this.userFeatureBaseUrl}/auth/login`;
+    return this.promisifyHttp.post(url, input);
   }
 }

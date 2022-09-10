@@ -5,6 +5,7 @@
   "scripts": {
     "nx": "nx",
     "start": "nx serve",
+    "start:all": "nx run-many --target=serve --all --parallel --maxParallel=6",
     "build": "nx build",
     "test": "nx test",
     "format": "nx format:write",
@@ -24,6 +25,7 @@
     "@nestjs/platform-express": "^8.0.0",
     "apollo-server-express": "^3.8.1",
     "axios": "^0.27.2",
+    "bcrypt": "^5.0.1",
     "class-validator": "^0.13.2",
     "graphql": "^16.5.0",
     "mongodb": "^4.9.1",
@@ -46,6 +48,7 @@
     "@nrwl/node": "13.10.5",
     "@nrwl/workspace": "13.10.5",
     "@types/axios": "^0.14.0",
+    "@types/bcrypt": "^5.0.0",
     "@types/jest": "27.0.2",
     "@types/node": "16.11.7",
     "@types/passport-jwt": "^3.0.6",
