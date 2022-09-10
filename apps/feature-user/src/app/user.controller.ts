@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Put } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
 
 import { UserService } from './user.service';
 import {
@@ -20,6 +20,23 @@ export class UserController {
   @Get('/users')
   getUsers(): Promise<UserDto[]> {
     return this.userService.findAll();
+  }
+
+  /**
+   * Returns user by username
+   *
+   * @param usernames usernames route param
+   * @returns UserDto | null
+   */
+
+  @Get('/username/:usernames')
+  getUserByUsernames(@Param('username') usernames: string): Promise<UserDto[]> {
+    return this.userService.findAll(usernames);
+  }
+
+  @Get('/users/ids/:ids')
+  getUsersByIds(@Param('ids') ids: string) {
+    return this.userService.findByIds(ids);
   }
 
   /**

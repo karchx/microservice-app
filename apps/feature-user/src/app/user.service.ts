@@ -31,6 +31,16 @@ export class UserService {
     }
   }
 
+  async findByIds(ids: string) {
+    const idArray = ids.split(',').map((item) => item.trim());
+    const users = await this.userModel
+      .find({ _id: { $in: idArray } })
+      .lean()
+      .exec();
+
+    return users;
+  }
+
   async upsert(body: UpdateUserDto | CreateUserDto): Promise<UserDto | null> {
     const passwordEncrypt = Hash.make(body.password);
     const update = {
