@@ -41,6 +41,15 @@ export class UserService {
     return users;
   }
 
+  async findById(id: string): Promise<UserDto | null> {
+    const user = await this.userModel.findById(id).lean().exec();
+    return user;
+  }
+
+  async findOne(query: any): Promise<UserDto | null> {
+    return await this.userModel.findOne(query).lean().exec();
+  }
+
   async upsert(body: UpdateUserDto | CreateUserDto): Promise<UserDto | null> {
     const passwordEncrypt = Hash.make(body.password);
     const update = {

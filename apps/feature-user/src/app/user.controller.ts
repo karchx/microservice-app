@@ -23,7 +23,7 @@ export class UserController {
   }
 
   /**
-   * Returns user by username
+   * Returns users by usernames
    *
    * @param usernames usernames route param
    * @returns UserDto | null
@@ -37,6 +37,41 @@ export class UserController {
   @Get('/users/ids/:ids')
   getUsersByIds(@Param('ids') ids: string) {
     return this.userService.findByIds(ids);
+  }
+
+  /**
+   * Returns user by id
+   *
+   * @param id id route param
+   * @returns UserDto | null
+   */
+  @Get('/:id')
+  getUserById(@Param('id') id: string): Promise<UserDto | null> {
+    return this.userService.findById(id);
+  }
+
+  /**
+   * Returns user by username
+   *
+   * @param username username route param
+   * @returns UserDto | null
+   */
+  @Get('/username/:username')
+  getUserByUsername(
+    @Param('username') username: string
+  ): Promise<UserDto | null> {
+    return this.userService.findOne({ username });
+  }
+
+  /**
+   * Returns user by email
+   *
+   * @param email email route param
+   * @returns UserDto | null
+   */
+  @Get('/email/:email')
+  getUserByEmail(@Param('email') email: string): Promise<UserDto | null> {
+    return this.userService.findOne({ email });
   }
 
   /**
