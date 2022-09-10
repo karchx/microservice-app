@@ -5,6 +5,10 @@ export default () => ({
   auth: {
     secret: process.env.JWT_SECRET,
   },
+  queue: {
+    host: process.env.BULL_QUEUE_HOST,
+    port: process.env.BULL_QUEUE_PORT,
+  },
   features: {
     user: {
       baseUrl: process.env.USER_BASE_URL,

@@ -1,7 +1,11 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, Put } from '@nestjs/common';
 
 import { UserService } from './user.service';
-import { CreateUserDto, UserDto } from '@microservice-app/models';
+import {
+  CreateUserDto,
+  UpdateUserDto,
+  UserDto,
+} from '@microservice-app/models';
 
 @Controller('/user')
 export class UserController {
@@ -20,11 +24,23 @@ export class UserController {
 
   /**
    * Creates a new user
+   *
    * @param body CreateUserDto
    * @returns UserDto | null
    */
   @Post('/')
   createUser(@Body() body: CreateUserDto): Promise<UserDto | null> {
+    return this.userService.upsert(body);
+  }
+
+  /**
+   * Updates a user
+   *
+   * @param body UpdateUserDto
+   * @returns UserDto | null
+   */
+  @Put('/')
+  updateUser(@Body() body: UpdateUserDto): Promise<UserDto | null> {
     return this.userService.upsert(body);
   }
 

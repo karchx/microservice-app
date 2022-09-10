@@ -1,8 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
+import { InjectQueue } from '@nestjs/bull';
 import { Model } from 'mongoose';
+import { Queue } from 'bull';
 import {
   CreateUserDto,
+  QueueEvents,
+  Queues,
   UpdateUserDto,
   UserDto,
 } from '@microservice-app/models';
@@ -11,7 +15,10 @@ import { Hash } from '@microservice-app/shared';
 
 @Injectable()
 export class UserService {
-  constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
+  constructor(
+    @InjectModel(User.name) private userModel: Model<UserDocument>,
+    @InjectQueue(Queues.Users) private usersQueue: Queue
+  ) {}
 
   async findAll(usernames?: string): Promise<UserDto[]> {
     if (usernames) {
@@ -39,7 +46,12 @@ export class UserService {
     );
 
     if (user) {
-      //TODO: add queue
+      // publish the updated user in a message on the Users queue
+      await this.usersQueue.add(QueueEvents.UserUpdate, {
+        username: user.username,
+        bio: user.bio,
+        image: user.image,
+      });
     }
 
     return user;
