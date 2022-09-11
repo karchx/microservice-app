@@ -7,8 +7,11 @@ import { map, Observable } from 'rxjs';
 export class PromisifyHttpService {
   constructor(private httpService: HttpService) {}
 
-  get<T>(url: string, config?: AxiosRequestConfig): Observable<T> {
-    return this.httpService.get(url, config).pipe(map((res) => res.data));
+  get(url: string, config?: AxiosRequestConfig): Promise<any> {
+    return this.httpService
+      .get(url, config)
+      .toPromise()
+      .then((res) => res.data);
   }
 
   post<T>(

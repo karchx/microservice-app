@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { TokenDto, UserDto } from '@microservice-app/models';
-import { PromisifyHttpService } from '@microservice-app/shared';
+import { Hash, PromisifyHttpService } from '@microservice-app/shared';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 
@@ -22,19 +22,16 @@ export class AuthService {
    * NOTE: encrypt
    */
 
-  validateUser(username: string, password: string) {
-    return this.promisifyHttpService
-      .get<UserDto | null>(`${this.userFeatureBaeUrl}/user/email/${username}`)
-      .subscribe({
-        next(value) {
-          if (value && value.password === password) {
-            return value;
-          }
-        },
-        error() {
-          return null;
-        },
-      });
+  async validateUser(email: string, password: string) {
+    const user = await this.promisifyHttpService.get(
+      `${this.userFeatureBaeUrl}/user/email/${email}`
+    );
+    const isValidPassword = Hash.compare(password, user.password);
+
+    if (user && isValidPassword) {
+      return user;
+    }
+    return null;
   }
 
   /**

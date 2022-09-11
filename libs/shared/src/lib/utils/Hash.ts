@@ -5,4 +5,8 @@ export class Hash {
     const salt = bcrypt.genSaltSync(10);
     return bcrypt.hashSync(plainText, salt);
   }
+
+  static compare(plainText: string, hash: string) {
+    return bcrypt.compare(plainText, hash);
+  }
 }
