@@ -2,6 +2,7 @@
   "version": 2,
   "projects": {
     "auth": "libs/auth",
+    "feature-profile": "apps/feature-profile",
     "feature-user": "apps/feature-user",
     "microservice-app": "apps/microservice-app",
     "models": "libs/models",
