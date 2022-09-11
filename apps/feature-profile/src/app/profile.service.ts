@@ -2,8 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
-import { ProfileDto, UserDto } from '@microservice-app/models';
+import { FollowOperation, ProfileDto, UserDto } from '@microservice-app/models';
 import { Profile, ProfileDocument } from './schemas/profile.schema';
+import { pull, uniq } from 'lodash';
 
 @Injectable()
 export class ProfileService {
@@ -36,6 +37,10 @@ export class ProfileService {
     };
   }
 
+  async findOneProfile(username: string): Promise<Profile | null> {
+    return await this.profileModel.findOne({ username }).exec();
+  }
+
   async upsert(user: UserDto): Promise<ProfileDto | null> {
     const update = {
       followers: [],
@@ -49,5 +54,44 @@ export class ProfileService {
       update,
       { new: true, useFindAndModify: false, upsert: true }
     );
+  }
+
+  async modifyFollow(
+    username: string,
+    user: UserDto,
+    op: FollowOperation
+  ): Promise<ProfileDto | null> {
+    const profile: Profile = await this.profileModel
+      .findOne({ username })
+      .exec();
+
+    const update = {
+      followers: profile.followers,
+    };
+
+    switch (op) {
+      case 'FOLLOW':
+        update.followers.push(user.username);
+        update.followers = uniq(update.followers);
+        break;
+      case 'UNFOLLOW':
+        update.followers = pull(update.followers, user.username);
+        break;
+    }
+
+    const updated = await this.profileModel.findOneAndUpdate(
+      { username },
+      update,
+      { new: true, useFindAndModify: false }
+    );
+    const following: boolean = updated.followers.includes(user.username);
+
+    return {
+      _id: updated._id,
+      username: updated.username,
+      bio: updated.bio,
+      image: updated.image,
+      following,
+    };
   }
 }
