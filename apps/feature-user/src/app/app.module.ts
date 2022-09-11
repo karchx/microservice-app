@@ -8,6 +8,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { User, UserSchema } from './schemas/user.schema';
 import { BullModule } from '@nestjs/bull';
 import { Queues } from '@microservice-app/models';
+import { AuthModule } from '@microservice-app/auth';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { Queues } from '@microservice-app/models';
     BullModule.registerQueue({
       name: Queues.Users,
     }),
+    AuthModule,
   ],
   controllers: [UserController],
   providers: [UserService],

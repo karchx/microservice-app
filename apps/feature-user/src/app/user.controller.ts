@@ -1,4 +1,14 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Put,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
+import { JwtAuthGuard } from '@microservice-app/auth';
 
 import { UserService } from './user.service';
 import {
@@ -10,6 +20,12 @@ import {
 @Controller('/user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
+
+  @UseGuards(JwtAuthGuard)
+  @Get('/')
+  getMet(@Req() req): Promise<UserDto> {
+    return req.user;
+  }
 
   /**
    * Returns all users
@@ -91,6 +107,7 @@ export class UserController {
    * @param body UpdateUserDto
    * @returns UserDto | null
    */
+  @UseGuards(JwtAuthGuard)
   @Put('/')
   updateUser(@Body() body: UpdateUserDto): Promise<UserDto | null> {
     return this.userService.upsert(body);
