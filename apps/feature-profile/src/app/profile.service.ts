@@ -94,4 +94,8 @@ export class ProfileService {
       following,
     };
   }
+
+  async getProfilleFollowedByUser(username: string): Promise<ProfileDto[]> {
+    return this.profileModel.find({ followers: username }).exec();
+  }
 }

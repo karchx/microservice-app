@@ -57,4 +57,9 @@ export class ProfileController {
   ): Promise<ProfileDto | null> {
     return this.profileService.modifyFollow(username, req.user, 'UNFOLLOW');
   }
+
+  @Get('/:username/follows')
+  getProfilleFollowedByUser(@Param('username') username: string) {
+    return this.profileService.getProfilleFollowedByUser(username);
+  }
 }
