@@ -3,6 +3,7 @@
   "projects": {
     "auth": "libs/auth",
     "feature-profile": "apps/feature-profile",
+    "feature-tag": "apps/feature-tag",
     "feature-user": "apps/feature-user",
     "microservice-app": "apps/microservice-app",
     "models": "libs/models",
