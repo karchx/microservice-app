@@ -9,7 +9,7 @@ import { SharedModule } from '@microservice-app/shared';
 import { ArticleController } from './article.controller';
 import { ArticleService } from './article.service';
 import { Article, ArticleSchema } from './schemas/article.schema';
-import { CommentSchema } from './schemas/comment.schema';
+import { Comment, CommentSchema } from './schemas/comment.schema';
 
 @Module({
   imports: [
