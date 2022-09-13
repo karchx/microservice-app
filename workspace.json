@@ -2,6 +2,7 @@
   "version": 2,
   "projects": {
     "auth": "libs/auth",
+    "feature-article": "apps/feature-article",
     "feature-profile": "apps/feature-profile",
     "feature-tag": "apps/feature-tag",
     "feature-user": "apps/feature-user",
