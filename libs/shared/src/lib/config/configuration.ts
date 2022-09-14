@@ -13,5 +13,8 @@ export default () => ({
     user: {
       baseUrl: process.env.USER_BASE_URL,
     },
+    profile: {
+      baseUrl: process.env.PROFILE_BASE_URL,
+    },
   },
 });

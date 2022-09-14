@@ -14,6 +14,7 @@ import {
   Req,
   UseGuards,
 } from '@nestjs/common';
+import { PageDto } from 'libs/models/src/lib/dto/base';
 
 import { ArticleService } from './article.service';
 
@@ -35,6 +36,21 @@ export class ArticleController {
   @Get('/')
   listArticles(@Query() query: FindAllArticleQueryDto): Promise<ArticleDto[]> {
     return this.articleService.findAll(query);
+  }
+
+  /**
+   * will return multiple articles created by followed users, ordered by most
+   * recent first.
+   * @param req
+   * @param query
+   */
+  @UseGuards(JwtAuthGuard)
+  @Get('/feed')
+  getUserFeed(
+    @Req() req: any,
+    @Query() query?: PageDto
+  ): Promise<ArticleDto[]> {
+    return this.articleService.feed(req.user, query);
   }
 
   @Get('/:slug')

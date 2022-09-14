@@ -2,6 +2,7 @@ import {
   ArticleDto,
   CreateArticleDto,
   FindAllArticleQueryDto,
+  ProfileDto,
   QueueEvents,
   Queues,
   UserDto,
@@ -15,6 +16,8 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { InjectModel } from '@nestjs/mongoose';
 import { Queue } from 'bull';
+import { PageDto } from 'libs/models/src/lib/dto/base';
+import { ObjectId } from 'mongodb';
 import { Model } from 'mongoose';
 import { Article, ArticleDocument } from './schemas/article.schema';
 
@@ -32,6 +35,9 @@ export class ArticleService {
   ) {
     this.userFeatureBaseUrl = this.configService.get<string>(
       'features.user.baseUrl'
+    );
+    this.profileFeatureBaseUrl = this.configService.get<string>(
+      'features.profile.baseUrl'
     );
   }
 
@@ -65,6 +71,35 @@ export class ArticleService {
 
   async findOne(slug: string): Promise<ArticleDto | null> {
     return await this.articleModel.findOne({ slug }).exec();
+  }
+
+  async feed(user: UserDto, queryParams?: PageDto): Promise<ArticleDto[]> {
+    // find all users this user is following
+    const profiles: ProfileDto[] = await this.promisifyHttp.get(
+      `${this.profileFeatureBaseUrl}/profiles/${user.username}/follows`
+    );
+    const usernames = profiles.map((profile) => profile.username);
+
+    // find the respective users
+    const users: UserDto[] = await this.promisifyHttp.get(
+      `${this.userFeatureBaseUrl}/user/usernames/${usernames}`
+    );
+    console.log(users);
+    const query = users.map((user) => user._id);
+    const limit = (queryParams?.limit && parseInt(queryParams.limit)) || 20;
+    const offset = (queryParams?.offset && parseInt(queryParams.offset)) || 0;
+    console.log(query);
+
+    const articles = await this.articleModel
+      .find({
+        authorId: { $in: query },
+      })
+      .sort({ createdAt: -1 })
+      .skip(offset)
+      .limit(limit)
+      .exec();
+
+    return articles;
   }
 
   async create(
