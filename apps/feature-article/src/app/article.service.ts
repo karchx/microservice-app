@@ -17,7 +17,6 @@ import { ConfigService } from '@nestjs/config';
 import { InjectModel } from '@nestjs/mongoose';
 import { Queue } from 'bull';
 import { PageDto } from 'libs/models/src/lib/dto/base';
-import { ObjectId } from 'mongodb';
 import { Model } from 'mongoose';
 import { Article, ArticleDocument } from './schemas/article.schema';
 
