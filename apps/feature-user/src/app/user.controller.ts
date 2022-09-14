@@ -45,7 +45,7 @@ export class UserController {
    * @returns UserDto | null
    */
 
-  @Get('/username/:usernames')
+  @Get('/usernames/:usernames')
   getUserByUsernames(@Param('username') usernames: string): Promise<UserDto[]> {
     return this.userService.findAll(usernames);
   }
