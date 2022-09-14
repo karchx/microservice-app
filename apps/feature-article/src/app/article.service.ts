@@ -84,11 +84,9 @@ export class ArticleService {
     const users: UserDto[] = await this.promisifyHttp.get(
       `${this.userFeatureBaseUrl}/user/usernames/${usernames}`
     );
-    console.log(users);
     const query = users.map((user) => user._id);
     const limit = (queryParams?.limit && parseInt(queryParams.limit)) || 20;
     const offset = (queryParams?.offset && parseInt(queryParams.offset)) || 0;
-    console.log(query);
 
     const articles = await this.articleModel
       .find({
