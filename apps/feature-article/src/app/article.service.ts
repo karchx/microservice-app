@@ -5,6 +5,7 @@ import {
   ProfileDto,
   QueueEvents,
   Queues,
+  UpdateArticleDto,
   UserDto,
 } from '@microservice-app/models';
 import {
@@ -45,7 +46,7 @@ export class ArticleService {
       .findOne({ slug })
       .exec();
 
-    if (!article || !article.authorId.equals(user._id)) {
+    if (!article || !(article.authorId === user._id)) {
       throw new UnauthorizedException();
     }
   }
@@ -118,5 +119,48 @@ export class ArticleService {
       slug: this.stringUtilsService.slugify(body.title),
     };
     return await this.articleModel.create(article);
+  }
+
+  async update(
+    slug: string,
+    body: UpdateArticleDto,
+    user: UserDto
+  ): Promise<ArticleDto | null> {
+    const { tagList } = body;
+
+    if (tagList && tagList.length) {
+      await this.tagsQueue.add(QueueEvents.EvaluateTags, {
+        tagList,
+      });
+    }
+
+    // only original author is allowed to update
+    await this.isUserArticleAuthor(user, slug);
+
+    const update = {
+      ...body,
+      slug: this.stringUtilsService.slugify(body.title),
+      updatedAt: new Date(),
+    };
+
+    return await this.articleModel.findOneAndUpdate({ slug }, update, {
+      new: true,
+      useFindAndModify: false,
+    });
+  }
+
+  async delete(slug: string, user: UserDto): Promise<ArticleDto> {
+    await this.isUserArticleAuthor(user, slug);
+
+    const update = {
+      deletedAt: new Date(),
+    };
+
+    const deleted = await this.articleModel.findOneAndUpdate({ slug }, update, {
+      new: true,
+      useFindAndModify: false,
+    });
+
+    return deleted;
   }
 }

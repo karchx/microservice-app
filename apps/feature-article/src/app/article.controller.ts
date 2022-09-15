@@ -3,13 +3,16 @@ import {
   ArticleDto,
   CreateArticleDto,
   FindAllArticleQueryDto,
+  UpdateArticleDto,
 } from '@microservice-app/models';
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Post,
+  Put,
   Query,
   Req,
   UseGuards,
@@ -65,5 +68,24 @@ export class ArticleController {
     @Req() req: any
   ): Promise<ArticleDto | null> {
     return this.articleService.create(body, req.user);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Put('/:slug')
+  updateArticle(
+    @Req() req: any,
+    @Body() body: UpdateArticleDto,
+    @Param('slug') slug: string
+  ): Promise<ArticleDto | null> {
+    return this.articleService.update(slug, body, req.user);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Delete('/:slug')
+  deleteArticle(
+    @Req() req: any,
+    @Param('slug') slug: string
+  ): Promise<ArticleDto> {
+    return this.articleService.delete(slug, req.user);
   }
 }
