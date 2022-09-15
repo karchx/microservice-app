@@ -1,0 +1,20 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+input LoginInput {
+  email: String!
+  password: String!
+}
+
+type Mutation {
+  login(loginData: LoginInput!): Token!
+}
+
+type Query {
+  sayHello: String!
+}
+
+type Token {
+  access_token: String!
+}
