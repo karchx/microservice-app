@@ -1,6 +1,8 @@
 import { JwtAuthGuard } from '@microservice-app/auth';
 import {
   ArticleDto,
+  CommentDto,
+  CreateArticleCommentDto,
   CreateArticleDto,
   FindAllArticleQueryDto,
   UpdateArticleDto,
@@ -87,5 +89,74 @@ export class ArticleController {
     @Param('slug') slug: string
   ): Promise<ArticleDto> {
     return this.articleService.delete(slug, req.user);
+  }
+
+  /**
+   * Creates a comment on an article
+   *
+   * @param req the request
+   * @param body CreateArticleCommentDto
+   * @param slug the title slug
+   * @returns the create comment = CommentDto | null
+   */
+  @UseGuards(JwtAuthGuard)
+  @Post('/:slug/comments')
+  addComment(
+    @Req() req: any,
+    @Body() body: CreateArticleCommentDto,
+    @Param('slug') slug: string
+  ): Promise<CommentDto | null> {
+    return this.articleService.addComment(slug, body, req.user);
+  }
+
+  /**
+   * Returns all article comments
+   *
+   * @param slug the title slug
+   * @returns the article comments - CommentDto[]
+   */
+  @Get('/:slug/comments')
+  getComments(@Param('slug') slug: string): Promise<CommentDto[]> {
+    return this.articleService.getComments(slug);
+  }
+
+  /**
+   * Deletes a comments
+   *
+   * @param req the request
+   * @param id the comment id
+   * @returns the delete comment - CommentDto | null
+   */
+  @UseGuards(JwtAuthGuard)
+  @Delete('/:id/comments')
+  deleteComment(
+    @Req() req: any,
+    @Param('id') id: string
+  ): Promise<CommentDto | null> {
+    return this.articleService.deleteComment(id, req.user);
+  }
+
+  /**
+   * Adds a favorite to an article
+   *
+   * @param slug the title slug
+   * @returns the updated article = ArticleDto | null
+   */
+  @UseGuards(JwtAuthGuard)
+  @Post('/:slug/favorite')
+  addFavorite(@Param('slug') slug: string): Promise<ArticleDto | null> {
+    return this.articleService.modifyFavorite(slug, 'Increment');
+  }
+
+  /**
+   * Removes a favorite from an article
+   *
+   * @param slug the title slug
+   * @returns the update article - ArticleDto | null
+   */
+  @UseGuards(JwtAuthGuard)
+  @Delete('/:slug/favorite')
+  removeFavorite(@Param('slug') slug: string): Promise<ArticleDto | null> {
+    return this.articleService.modifyFavorite(slug, 'Decrement');
   }
 }

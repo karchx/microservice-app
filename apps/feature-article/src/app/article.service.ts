@@ -1,6 +1,9 @@
 import {
   ArticleDto,
+  CommentDto,
+  CreateArticleCommentDto,
   CreateArticleDto,
+  FavoriteOperation,
   FindAllArticleQueryDto,
   ProfileDto,
   QueueEvents,
@@ -20,6 +23,7 @@ import { Queue } from 'bull';
 import { PageDto } from 'libs/models/src/lib/dto/base';
 import { Model } from 'mongoose';
 import { Article, ArticleDocument } from './schemas/article.schema';
+import { Comment, CommentDocument } from './schemas/comment.schema';
 
 @Injectable()
 export class ArticleService {
@@ -28,6 +32,7 @@ export class ArticleService {
 
   constructor(
     @InjectModel(Article.name) private articleModel: Model<ArticleDocument>,
+    @InjectModel(Comment.name) private commentModel: Model<CommentDocument>,
     @InjectQueue(Queues.Tags) private tagsQueue: Queue,
     private stringUtilsService: StringUtilService,
     private promisifyHttp: PromisifyHttpService,
@@ -47,6 +52,17 @@ export class ArticleService {
       .exec();
 
     if (!article || !(article.authorId === user._id)) {
+      throw new UnauthorizedException();
+    }
+  }
+
+  async isUserCommentAuthor(user: UserDto, id: string) {
+    const comment: CommentDto = await this.commentModel
+      .findOne({ _id: id })
+      .exec();
+
+    // only original author can update
+    if (!comment || !(comment.authorId === user._id)) {
       throw new UnauthorizedException();
     }
   }
@@ -161,6 +177,71 @@ export class ArticleService {
       useFindAndModify: false,
     });
 
+    //delete comments
+    await this.deleteArticleComments(deleted);
+
     return deleted;
+  }
+
+  async addComment(
+    slug: string,
+    body: CreateArticleCommentDto,
+    user: UserDto
+  ): Promise<CommentDto | null> {
+    const { _id: articleId } = await this.articleModel.findOne({ slug }).exec();
+
+    const comment = {
+      ...body,
+      authorId: user._id,
+      articleId,
+    };
+    return await this.commentModel.create(comment);
+  }
+
+  async getComments(slug: string): Promise<CommentDto[]> {
+    const { _id: articleId } = await this.articleModel.findOne({ slug }).exec();
+    return await this.commentModel
+      .find({ articleId, deletedAt: { $eq: null } })
+      .exec();
+  }
+
+  async deleteComment(id: string, user: UserDto): Promise<CommentDto | null> {
+    await this.isUserCommentAuthor(user, id);
+
+    const update = {
+      deletedAt: new Date(),
+    };
+    return await this.commentModel.findOneAndUpdate({ _id: id }, update, {
+      new: true,
+      useFindAndModify: false,
+    });
+  }
+
+  async deleteArticleComments(article: ArticleDto): Promise<any> {
+    const update = {
+      deletedAt: new Date(),
+    };
+
+    return this.commentModel.updateMany({ articleId: article._id }, update);
+  }
+
+  async modifyFavorite(
+    slug: string,
+    op: FavoriteOperation
+  ): Promise<ArticleDto | null> {
+    const article: Article = await this.articleModel.findOne({ slug }).exec();
+    if (article.favoritesCount === 0 && op === 'Decrement') {
+      return article;
+    }
+
+    const update = {
+      $inc: { favoritesCount: op === 'Increment' ? 1 : -1 },
+      updatedAt: new Date(),
+    };
+
+    return await this.articleModel.findOneAndUpdate({ slug }, update, {
+      new: true,
+      useFindAndModify: false,
+    });
   }
 }
