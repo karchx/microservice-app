@@ -1,3 +1,4 @@
+import { UserDto } from '@microservice-app/models';
 import { PromisifyHttpService } from '@microservice-app/shared';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
@@ -19,5 +20,32 @@ export class UserService {
   async login(input: LoginInput) {
     const url = `${this.userFeatureBaseUrl}/auth/login`;
     return this.promisifyHttp.post(url, input);
+  }
+
+  async getUser(
+    id?: string,
+    username?: string,
+    email?: string
+  ): Promise<UserDto> {
+    let url: string;
+
+    if (id) {
+      url = `${this.userFeatureBaseUrl}/user/${id}`;
+    }
+
+    if (username) {
+      url = `${this.userFeatureBaseUrl}/user/username/${username}`;
+    }
+
+    if (email) {
+      url = `${this.userFeatureBaseUrl}/user/email/${email}`;
+    }
+
+    return this.promisifyHttp.get(url);
+  }
+
+  async getMe(authHeader: any): Promise<UserDto> {
+    const url = `${this.userFeatureBaseUrl}/user`;
+    return this.promisifyHttp.get(url, { headers: authHeader });
   }
 }

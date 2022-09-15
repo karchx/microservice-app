@@ -3,12 +3,12 @@ import { SharedModule } from '@microservice-app/shared';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
-import { ApolloServerPluginLandingPageLocalDefault } from 'apollo-server-core';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ExtendedGqlExecutionContext } from './extended-gql-context';
 import { LoginResolver } from './resolvers/login.resolver';
+import { UserResolver } from './resolvers/user.resolver';
 import { UserService } from './services/user.service';
 
 @Module({
@@ -27,12 +27,13 @@ import { UserService } from './services/user.service';
         res,
         payload,
         connection,
+        token: req.headers.token,
       }),
     }),
     AuthModule,
     SharedModule,
   ],
   controllers: [AppController],
-  providers: [AppService, UserService, LoginResolver],
+  providers: [AppService, UserService, LoginResolver, UserResolver],
 })
 export class AppModule {}

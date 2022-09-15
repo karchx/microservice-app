@@ -12,9 +12,20 @@ type Mutation {
 }
 
 type Query {
-  sayHello: String!
+  me: User!
+  user(email: String, id: String, username: String): User!
 }
 
 type Token {
   access_token: String!
+}
+
+type User {
+  _id: String!
+  bio: String
+  email: String!
+  image: String
+  password: String!
+  updatedAt: String!
+  username: String!
 }

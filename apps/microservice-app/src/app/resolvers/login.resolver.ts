@@ -7,11 +7,6 @@ import { UserService } from '../services/user.service';
 export class LoginResolver {
   constructor(private userService: UserService) {}
 
-  @Query(() => String)
-  sayHello(): string {
-    return 'Hello World!';
-  }
-
   @Mutation((returns) => Token)
   async login(@Args('loginData') loginData: LoginInput) {
     return this.userService.login(loginData);
