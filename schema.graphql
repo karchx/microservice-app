@@ -8,7 +8,9 @@ input LoginInput {
 }
 
 type Mutation {
+  createUser(createUserData: UserCreateInput!): User!
   login(loginData: LoginInput!): Token!
+  updateUser(updateUserData: UserUpdateInput!): User!
 }
 
 type Query {
@@ -27,5 +29,19 @@ type User {
   image: String
   password: String!
   updatedAt: String!
+  username: String!
+}
+
+input UserCreateInput {
+  email: String!
+  password: String!
+  username: String!
+}
+
+input UserUpdateInput {
+  bio: String
+  email: String!
+  image: String
+  password: String
   username: String!
 }

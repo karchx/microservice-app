@@ -3,6 +3,8 @@ import { PromisifyHttpService } from '@microservice-app/shared';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { LoginInput } from '../models/login.input';
+import { UserCreateInput } from '../models/userCreate.input';
+import { UserUpdateInput } from '../models/userUpdate.input';
 
 @Injectable()
 export class UserService {
@@ -47,5 +49,17 @@ export class UserService {
   async getMe(authHeader: any): Promise<UserDto> {
     const url = `${this.userFeatureBaseUrl}/user`;
     return this.promisifyHttp.get(url, { headers: authHeader });
+  }
+
+  async create(input: UserCreateInput): Promise<UserDto> {
+    const url = `${this.userFeatureBaseUrl}/user`;
+    return this.promisifyHttp.post<UserCreateInput>(url, input);
+  }
+
+  async update(input: UserUpdateInput, authHeader: any): Promise<UserDto> {
+    const url = `${this.userFeatureBaseUrl}/user`;
+    return this.promisifyHttp.put<UserUpdateInput>(url, input, {
+      headers: authHeader,
+    });
   }
 }

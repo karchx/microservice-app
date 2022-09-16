@@ -18,18 +18,22 @@ export class PromisifyHttpService {
     url: string,
     body?: T | null,
     config?: AxiosRequestConfig
-  ): Observable<T> {
+  ): Promise<any> {
     return this.httpService
       .post(url, body, config)
-      .pipe(map((res) => res.data));
+      .toPromise()
+      .then((res) => res.data);
   }
 
   put<T>(
     url: string,
     body?: T | null,
     config?: AxiosRequestConfig
-  ): Observable<T> {
-    return this.httpService.put(url, body, config).pipe(map((res) => res.data));
+  ): Promise<any> {
+    return this.httpService
+      .put(url, body, config)
+      .toPromise()
+      .then((res) => res.data);
   }
 
   delete<T>(url: string, config?: AxiosRequestConfig): Observable<T> {

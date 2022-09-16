@@ -1,6 +1,8 @@
-import { Resolver, Query, Context, Args } from '@nestjs/graphql';
+import { Resolver, Query, Context, Args, Mutation } from '@nestjs/graphql';
 import { ExtendedGqlExecutionContext } from '../extended-gql-context';
 import { User } from '../models/user.model';
+import { UserCreateInput } from '../models/userCreate.input';
+import { UserUpdateInput } from '../models/userUpdate.input';
 import { UserService } from '../services/user.service';
 
 @Resolver((of) => User)
@@ -23,5 +25,22 @@ export class UserResolver {
     };
 
     return this.userService.getMe(authHeader);
+  }
+
+  @Mutation(() => User)
+  async createUser(@Args('createUserData') createUserData: UserCreateInput) {
+    return this.userService.create(createUserData);
+  }
+
+  @Mutation(() => User)
+  async updateUser(
+    @Context() ctx: ExtendedGqlExecutionContext,
+    @Args('updateUserData') updateUserData: UserUpdateInput
+  ) {
+    const authHeader = {
+      Authorization: `Bearer ${ctx.token}`,
+    };
+
+    return this.userService.update(updateUserData, authHeader);
   }
 }
