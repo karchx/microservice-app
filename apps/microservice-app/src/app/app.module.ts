@@ -10,6 +10,8 @@ import { ExtendedGqlExecutionContext } from './extended-gql-context';
 import { LoginResolver } from './resolvers/login.resolver';
 import { UserResolver } from './resolvers/user.resolver';
 import { UserService } from './services/user.service';
+import { ProfileService } from './services/profile.service';
+import { ArticleService } from './services/article.service';
 
 @Module({
   imports: [
@@ -34,6 +36,13 @@ import { UserService } from './services/user.service';
     SharedModule,
   ],
   controllers: [AppController],
-  providers: [AppService, UserService, LoginResolver, UserResolver],
+  providers: [
+    AppService,
+    UserService,
+    ProfileService,
+    ArticleService,
+    LoginResolver,
+    UserResolver,
+  ],
 })
 export class AppModule {}

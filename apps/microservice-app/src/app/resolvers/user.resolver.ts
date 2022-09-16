@@ -1,13 +1,26 @@
-import { Resolver, Query, Context, Args, Mutation } from '@nestjs/graphql';
+import {
+  Resolver,
+  Query,
+  Context,
+  Args,
+  Mutation,
+  ResolveField,
+  Parent,
+} from '@nestjs/graphql';
 import { ExtendedGqlExecutionContext } from '../extended-gql-context';
+import { Article } from '../models/article.model';
 import { User } from '../models/user.model';
 import { UserCreateInput } from '../models/userCreate.input';
 import { UserUpdateInput } from '../models/userUpdate.input';
+import { ArticleService } from '../services/article.service';
 import { UserService } from '../services/user.service';
 
 @Resolver((of) => User)
 export class UserResolver {
-  constructor(private userService: UserService) {}
+  constructor(
+    private userService: UserService,
+    private articleService: ArticleService
+  ) {}
 
   @Query(() => User, { name: 'user' })
   async getUser(
@@ -42,5 +55,23 @@ export class UserResolver {
     };
 
     return this.userService.update(updateUserData, authHeader);
+  }
+
+  @ResolveField(() => [Article], { name: 'articles' })
+  async getArticles(@Parent() user: User) {
+    const { username } = user;
+    return this.articleService.getUserArticle(username);
+  }
+
+  @ResolveField(() => [Article], { name: 'feed' })
+  async getFeed(
+    @Context() ctx: ExtendedGqlExecutionContext,
+    @Parent() user: User
+  ) {
+    const authHeader = {
+      Authorization: `Bearer ${ctx.token}`,
+    };
+
+    return this.articleService.getUserFeed(authHeader);
   }
 }

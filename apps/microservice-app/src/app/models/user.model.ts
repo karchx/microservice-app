@@ -1,4 +1,5 @@
 import { Field, ObjectType } from '@nestjs/graphql';
+import { Article } from './article.model';
 
 @ObjectType()
 export class User {
@@ -23,5 +24,9 @@ export class User {
   @Field()
   updatedAt: string;
 
-  //@Field(type => [any], {})
+  @Field((type) => [Article], { nullable: 'itemsAndList' })
+  articles: Article[];
+
+  @Field((type) => [Article], { nullable: 'itemsAndList' })
+  feed: Article[];
 }
