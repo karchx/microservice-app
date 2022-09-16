@@ -6,6 +6,8 @@ import { PromisifyHttpService } from '@microservice-app/shared';
 import { Comment } from '../models/comment.model';
 import { ArticleCreateInput } from '../models/articleCreate.input';
 import { ArticleUpdateInput } from '../models/articleUpdate.input';
+import { CommentDeleteInput } from '../models/commentDelete.input';
+import { CommentCreateInput } from '../models/commentCreate.input';
 
 @Injectable()
 export class ArticleService {
@@ -89,6 +91,24 @@ export class ArticleService {
     return this.promisifyHttp.put<ArticleUpdateInput>(url, input, {
       headers: authHeader,
     });
+  }
+
+  async createComment(
+    input: CommentCreateInput,
+    authHeader: any
+  ): Promise<ArticleDto> {
+    const url = `${this.articleFeatureBaseUrl}/articles/${input.slug}/comments`;
+    return this.promisifyHttp.post<CommentCreateInput>(url, input, {
+      headers: authHeader,
+    });
+  }
+
+  async deleteComment(
+    input: CommentDeleteInput,
+    authHeader: any
+  ): Promise<ArticleDto> {
+    const url = `${this.articleFeatureBaseUrl}/articles/${input.id}/comments`;
+    return this.promisifyHttp.delete(url, { headers: authHeader });
   }
 
   async addFavorite(slug: string, authHeader: any): Promise<ArticleDto> {

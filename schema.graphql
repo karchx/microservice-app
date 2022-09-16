@@ -42,6 +42,16 @@ type Comment {
   deletedAt: String
 }
 
+input CommentCreateInput {
+  body: String!
+  slug: String!
+}
+
+input CommentDeleteInput {
+  id: String!
+  slug: String!
+}
+
 input LoginInput {
   email: String!
   password: String!
@@ -50,8 +60,10 @@ input LoginInput {
 type Mutation {
   addFavorite(slug: String!): Article!
   createArticle(createArticleData: ArticleCreateInput!): Article!
+  createComment(cretaeCommentData: CommentCreateInput!): Comment!
   createUser(createUserData: UserCreateInput!): User!
   deleteArticle(slug: String!): Article!
+  deleteComment(deleteCommentData: CommentDeleteInput!): Comment!
   login(loginData: LoginInput!): Token!
   removeFavorite(slug: String!): Article!
   updateArtcile(updateArticleData: ArticleUpdateInput!): Article!
