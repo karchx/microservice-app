@@ -7,7 +7,7 @@ type Article {
   author: User!
   authorId: String!
   body: String!
-  comments: [Comment]!
+  comments: [Comment!]!
   createdAt: String!
   deletedAt: String
   description: String!
@@ -16,6 +16,21 @@ type Article {
   tagList: [String]!
   title: String!
   updatedAt: String!
+}
+
+input ArticleCreateInput {
+  body: String!
+  description: String!
+  tagList: [String!]
+  title: String!
+}
+
+input ArticleUpdateInput {
+  body: String
+  description: String
+  slug: String!
+  tagList: [String!]
+  title: String
 }
 
 type Comment {
@@ -33,12 +48,18 @@ input LoginInput {
 }
 
 type Mutation {
+  addFavorite(slug: String!): Article!
+  createArticle(createArticleData: ArticleCreateInput!): Article!
   createUser(createUserData: UserCreateInput!): User!
+  deleteArticle(slug: String!): Article!
   login(loginData: LoginInput!): Token!
+  removeFavorite(slug: String!): Article!
+  updateArtcile(updateArticleData: ArticleUpdateInput!): Article!
   updateUser(updateUserData: UserUpdateInput!): User!
 }
 
 type Query {
+  articles(slug: String): [Article]!
   me: User!
   user(email: String, id: String, username: String): User!
 }

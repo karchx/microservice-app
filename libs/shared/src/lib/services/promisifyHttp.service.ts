@@ -36,7 +36,10 @@ export class PromisifyHttpService {
       .then((res) => res.data);
   }
 
-  delete<T>(url: string, config?: AxiosRequestConfig): Observable<T> {
-    return this.httpService.delete(url, config).pipe(map((res) => res.data));
+  delete(url: string, config?: AxiosRequestConfig): Promise<any> {
+    return this.httpService
+      .delete(url, config)
+      .toPromise()
+      .then((res) => res.data);
   }
 }
