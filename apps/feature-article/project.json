@@ -1,5 +1,5 @@
 {
-  "root": "apps/feature-article",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "apps/feature-article/src",
   "projectType": "application",
   "targets": {
@@ -43,7 +43,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/apps/feature-article"],
       "options": {
-        "jestConfig": "apps/feature-article/jest.config.js",
+        "jestConfig": "apps/feature-article/jest.config.ts",
         "passWithNoTests": true
       }
     }

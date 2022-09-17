@@ -1,5 +1,5 @@
 {
-  "root": "apps/feature-tag",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "apps/feature-tag/src",
   "projectType": "application",
   "targets": {
@@ -43,7 +43,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/apps/feature-tag"],
       "options": {
-        "jestConfig": "apps/feature-tag/jest.config.js",
+        "jestConfig": "apps/feature-tag/jest.config.ts",
         "passWithNoTests": true
       }
     }

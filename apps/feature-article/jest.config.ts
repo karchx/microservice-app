@@ -1,4 +1,5 @@
-module.exports = {
+/* eslint-disable */
+export default {
   displayName: 'feature-article',
   preset: '../../jest.preset.js',
   globals: {

@@ -1,5 +1,6 @@
-module.exports = {
-  displayName: 'feature-tag',
+/* eslint-disable */
+export default {
+  displayName: 'auth',
   preset: '../../jest.preset.js',
   globals: {
     'ts-jest': {
@@ -11,5 +12,5 @@ module.exports = {
     '^.+\\.[tj]s$': 'ts-jest',
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
-  coverageDirectory: '../../coverage/apps/feature-tag',
+  coverageDirectory: '../../coverage/libs/auth',
 };
