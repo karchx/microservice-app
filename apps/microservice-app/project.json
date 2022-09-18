@@ -1,5 +1,5 @@
 {
-  "root": "apps/microservice-app",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "apps/microservice-app/src",
   "projectType": "application",
   "targets": {
@@ -43,7 +43,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/apps/microservice-app"],
       "options": {
-        "jestConfig": "apps/microservice-app/jest.config.js",
+        "jestConfig": "apps/microservice-app/jest.config.ts",
         "passWithNoTests": true
       }
     }

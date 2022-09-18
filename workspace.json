@@ -6,8 +6,11 @@
     "feature-profile": "apps/feature-profile",
     "feature-tag": "apps/feature-tag",
     "feature-user": "apps/feature-user",
+    "frontend": "apps/frontend",
+    "frontend-e2e": "apps/frontend-e2e",
     "microservice-app": "apps/microservice-app",
     "models": "libs/models",
     "shared": "libs/shared"
-  }
+  },
+  "$schema": "./node_modules/nx/schemas/workspace-schema.json"
 }
