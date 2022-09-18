@@ -9,7 +9,7 @@
     "build": "nx build",
     "test": "nx test",
     "format": "nx format:write",
-    "prettier": "prettier --write \"libs/**/*.ts\" \"apps/**/*.ts\""
+    "prettier": "prettier --write \"libs/**/*.ts\" \"apps/**/*.ts\" \"apps/**/*.tsx\""
   },
   "private": true,
   "dependencies": {

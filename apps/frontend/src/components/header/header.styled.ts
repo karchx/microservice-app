@@ -1,5 +1,11 @@
-import { AppBar, ExtendButtonBase, MenuItem, MenuItemTypeMap, Toolbar } from '@mui/material'
-import styled from 'styled-components'
+import {
+  AppBar,
+  ExtendButtonBase,
+  MenuItem,
+  MenuItemTypeMap,
+  Toolbar,
+} from '@mui/material';
+import styled from 'styled-components';
 
 const StyledAppBar = styled(AppBar)``;
 
@@ -16,12 +22,12 @@ const StyledEmail = styled.span`
 const ToolbarInnerContainer = styled.div`
   display: flex;
   align-items: center;
-`
+`;
 
 export {
   StyledAppBar,
   StyledToolbar,
   StyledMenuItem,
   StyledEmail,
-  ToolbarInnerContainer
+  ToolbarInnerContainer,
 };
