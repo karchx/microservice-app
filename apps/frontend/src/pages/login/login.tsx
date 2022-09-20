@@ -1,13 +1,39 @@
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import { Button } from '@mui/material';
+import { UserDto } from '@microservice-app/models';
 import {
   StyledPaper,
   StyledTextField,
 } from '../../components/components.styled';
+import { useLoginUser } from '../../hooks';
 import { StyledRegisterLink, StyledButtonBar } from './login.styled';
+import { ConfigContext } from '../../context/routesContext';
+import { useNavigate } from 'react-router-dom';
 
 export interface LoginProps {}
 
 export function Login(props: LoginProps) {
+  const [loginFormData, setLoginFormData] = useState({} as UserDto);
+  const navigate = useNavigate();
+  const { setToken: setTokenInHeaders } = React.useContext(ConfigContext);
+  const [{ data: loginData, loading, error }, loginUser] = useLoginUser();
+
+  const handleSubmit = () => {
+    loginUser({ data: { ...loginFormData } });
+  };
+
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setLoginFormData({ ...loginFormData, [e.target.name]: e.target.value });
+  };
+
+  useEffect(() => {
+    if (loginData) {
+      localStorage.setItem('access_token', loginData.access_token);
+      setTokenInHeaders(loginData.access_token);
+      navigate('/home');
+    }
+  }, [loginData, setTokenInHeaders]);
+
   return (
     <StyledPaper>
       <form>
@@ -16,6 +42,7 @@ export function Login(props: LoginProps) {
           variant="outlined"
           label="Email"
           fullWidth
+          onChange={handleInputChange}
         />
         <StyledTextField
           name="password"
@@ -23,10 +50,13 @@ export function Login(props: LoginProps) {
           label="Password"
           type="password"
           fullWidth
+          onChange={handleInputChange}
         />
 
         <StyledButtonBar>
-          <Button variant="contained">Log me In!</Button>
+          <Button variant="contained" onClick={handleSubmit}>
+            Log me In!
+          </Button>
           <StyledRegisterLink to="/register">
             Not registered yet?
           </StyledRegisterLink>
