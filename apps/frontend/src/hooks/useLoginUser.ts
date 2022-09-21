@@ -5,12 +5,12 @@ import { ConfigContext } from '../context/routesContext';
 
 export const useLoginUser = () => {
   const {
-    routesConfig: { userBaseUrl, headers },
+    routesConfig: { authBaseUrl, headers },
   } = React.useContext(ConfigContext);
 
   return useAxios<TokenDto>(
     {
-      url: `${userBaseUrl}/auth/login`,
+      url: `${authBaseUrl}/auth/login`,
       method: 'POST',
       headers,
     },

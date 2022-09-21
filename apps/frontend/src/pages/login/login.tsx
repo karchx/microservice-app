@@ -42,7 +42,7 @@ export function Login(props: LoginProps) {
     <StyledPaper>
       <form>
         <StyledTextField
-          name="username"
+          name="email"
           variant="outlined"
           label="Email"
           fullWidth

@@ -1,6 +1,8 @@
 import { AxiosRequestHeaders } from 'axios';
 import { createContext } from 'react';
 
+const AUTH_BASE_URL =
+  process.env.userServiceBaseUrl || 'http://localhost:3333/api';
 const USER_BASE_URL =
   process.env.userServiceBaseUrl || 'http://localhost:3334/api';
 const TAG_BASE_URL =
@@ -11,6 +13,7 @@ const ARTICLE_BASE_URL =
   process.env.articleServiceBaseUrl || 'http://localhost:3337/api';
 
 interface RoutesConfig {
+  authBaseUrl: string;
   userBaseUrl: string;
   tagBaseUrl: string;
   profileBaseUrl: string;
@@ -24,6 +27,7 @@ const headersConfig: AxiosRequestHeaders = {
 };
 
 const routesConfig: RoutesConfig = {
+  authBaseUrl: `${AUTH_BASE_URL}`,
   userBaseUrl: `${USER_BASE_URL}`,
   tagBaseUrl: `${TAG_BASE_URL}`,
   profileBaseUrl: `${PROFILE_BASE_URL}`,
