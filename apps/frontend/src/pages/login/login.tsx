@@ -6,14 +6,17 @@ import {
   StyledTextField,
 } from '../../components/components.styled';
 import { useLoginUser } from '../../hooks';
+import { useAppDispatch } from '../../store/hooks';
 import { StyledRegisterLink, StyledButtonBar } from './login.styled';
 import { ConfigContext } from '../../context/routesContext';
 import { useNavigate } from 'react-router-dom';
+import { loginStateChangedAction } from '../../store/authStore';
 
 export interface LoginProps {}
 
 export function Login(props: LoginProps) {
   const [loginFormData, setLoginFormData] = useState({} as UserDto);
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const { setToken: setTokenInHeaders } = React.useContext(ConfigContext);
   const [{ data: loginData, loading, error }, loginUser] = useLoginUser();
@@ -30,9 +33,10 @@ export function Login(props: LoginProps) {
     if (loginData) {
       localStorage.setItem('access_token', loginData.access_token);
       setTokenInHeaders(loginData.access_token);
+      dispatch(loginStateChangedAction({ isUserLoggedIn: true }));
       navigate('/home');
     }
-  }, [loginData, setTokenInHeaders]);
+  }, [loginData, dispatch, setTokenInHeaders]);
 
   return (
     <StyledPaper>
