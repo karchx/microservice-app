@@ -97,7 +97,7 @@ export function Header(props: HeaderProps) {
               >
                 Logout
               </Button>
-              <StyledEmail>{userData?.email}</StyledEmail>
+              <StyledEmail>{userData?.username}</StyledEmail>
             </>
           )}
         </ToolbarInnerContainer>
