@@ -1,21 +1,72 @@
 import React, { useEffect, useState } from 'react';
+import { ArticleItem } from '../../components/article-item/article-item';
 import { useGetArticles } from '../../hooks';
-import { setActiveArticleAction } from '../../store/articleStore';
+import {
+  setActiveArticleAction,
+  setArticlesAction,
+} from '../../store/articleStore';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import {
+  StyledHome,
+  StyledTabButton,
+  StyledTabContent,
+  StyledTabSelector,
+} from './home.styled';
+
+type TabType = 'global' | 'feed';
 
 export interface HomeProps {}
 
 export function Home(props: HomeProps) {
+  const [activeTab, setActiveTab] = useState<TabType>('global');
   const [{ data: articleData, loading: articleLoading }, refetchArticles] =
     useGetArticles();
   const { isUserLoggedIn } = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (isUserLoggedIn) {
       refetchArticles();
-      console.log(articleData);
     }
   }, [isUserLoggedIn]);
 
-  return <div>Home</div>;
+  useEffect(() => {
+    if (articleData) {
+      dispatch(setArticlesAction(articleData));
+    }
+  }, [articleData, dispatch]);
+
+  const tabSelect = (tab: TabType) => {
+    setActiveTab(tab);
+  };
+
+  return (
+    <StyledHome>
+      <StyledTabSelector>
+        <StyledTabButton
+          onClick={() => tabSelect('global')}
+          selected={activeTab === 'global'}
+        >
+          Global
+        </StyledTabButton>
+        <StyledTabButton
+          onClick={() => tabSelect('feed')}
+          selected={activeTab === 'feed'}
+        >
+          Feed
+        </StyledTabButton>
+      </StyledTabSelector>
+
+      {activeTab === 'global' && (
+        <StyledTabContent>
+          {articleData?.map((article) => (
+            <ArticleItem
+              article={article}
+              key={article._id.toString()}
+            ></ArticleItem>
+          ))}
+        </StyledTabContent>
+      )}
+    </StyledHome>
+  );
 }
