@@ -29,7 +29,7 @@ export function ArticleItem({ article }: ArticleItemProps) {
   }
 
   const handleClick = () => {
-    dispatch(setActiveArticleAction({ article, author: null }));
+    dispatch(setActiveArticleAction({ article, author }));
     navigate('/article');
   };
 

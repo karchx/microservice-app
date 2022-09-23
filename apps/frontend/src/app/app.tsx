@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Route, Routes } from 'react-router-dom';
 import { Header } from '../components';
-import { Login, Register, Home } from '../pages';
+import { Login, Register, Home, Article } from '../pages';
 
 const StyledApp = styled.div``;
 
@@ -13,6 +13,7 @@ export function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/home" element={<Home />} />
+        <Route path="/article" element={<Article />} />
       </Routes>
     </StyledApp>
   );

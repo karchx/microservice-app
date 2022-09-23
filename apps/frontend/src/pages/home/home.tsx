@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { ArticleItem } from '../../components/article-item/article-item';
 import { useGetArticleFeed, useGetArticles } from '../../hooks';
 import {
-  setActiveArticleAction,
   setArticleFeedAction,
   setArticlesAction,
 } from '../../store/articleStore';
