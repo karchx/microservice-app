@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { ArticleItem } from '../../components/article-item/article-item';
-import { useGetArticles } from '../../hooks';
+import { useGetArticleFeed, useGetArticles } from '../../hooks';
 import {
   setActiveArticleAction,
+  setArticleFeedAction,
   setArticlesAction,
 } from '../../store/articleStore';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
@@ -21,6 +22,8 @@ export function Home(props: HomeProps) {
   const [activeTab, setActiveTab] = useState<TabType>('global');
   const [{ data: articleData, loading: articleLoading }, refetchArticles] =
     useGetArticles();
+  const [{ data: feedData, loading: feedLoading }, refetchFeed] =
+    useGetArticleFeed();
   const { isUserLoggedIn } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
 
@@ -28,7 +31,7 @@ export function Home(props: HomeProps) {
     if (isUserLoggedIn) {
       refetchArticles();
     }
-  }, [isUserLoggedIn]);
+  }, [isUserLoggedIn, refetchArticles]);
 
   useEffect(() => {
     if (articleData) {
@@ -36,9 +39,25 @@ export function Home(props: HomeProps) {
     }
   }, [articleData, dispatch]);
 
+  useEffect(() => {
+    if (isUserLoggedIn) {
+      refetchFeed();
+    }
+  }, [isUserLoggedIn, refetchFeed]);
+
+  useEffect(() => {
+    if (feedData) {
+      dispatch(setArticleFeedAction(feedData));
+    }
+  }, [feedData, dispatch]);
+
   const tabSelect = (tab: TabType) => {
     setActiveTab(tab);
   };
+
+  if (articleLoading || feedLoading) {
+    return null;
+  }
 
   return (
     <StyledHome>
@@ -60,6 +79,16 @@ export function Home(props: HomeProps) {
       {activeTab === 'global' && (
         <StyledTabContent>
           {articleData?.map((article) => (
+            <ArticleItem
+              article={article}
+              key={article._id.toString()}
+            ></ArticleItem>
+          ))}
+        </StyledTabContent>
+      )}
+      {activeTab === 'feed' && (
+        <StyledTabContent>
+          {feedData?.map((article) => (
             <ArticleItem
               article={article}
               key={article._id.toString()}

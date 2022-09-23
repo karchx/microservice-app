@@ -14,7 +14,7 @@ const StyledArticleTitle = styled.div``;
 const StyledCardDetails = styled.div`
   display: flex;
   flex-direction: row;
-  jsutify-content: space-between;
+  justify-content: space-between;
 `;
 
 const StyledCardTagDetails = styled.div``;
