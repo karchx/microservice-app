@@ -3,7 +3,7 @@ import * as Types from './operations';
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 const defaultOptions = {} as const;
-// Generated on 2022-09-24T17:45:28-06:00
+// Generated on 2022-09-24T17:50:16-06:00
 
 export const UserFragmentDoc = gql`
     fragment user on User {
@@ -177,4 +177,80 @@ export type UserByEmaildLazyQueryHookResult = ReturnType<typeof useUserByEmaildL
 export type UserByEmaildQueryResult = Apollo.QueryResult<Types.UserByEmaildQuery, Types.UserByEmaildQueryVariables>;
 export function refetchUserByEmaildQuery(variables?: Types.UserByEmaildQueryVariables) {
       return { query: UserByEmaildDocument, variables: variables }
+    }
+export const UserByIdDocument = gql`
+    query userById($input: String) {
+  user(id: $input) {
+    ...userWithArticles
+  }
+}
+    ${UserWithArticlesFragmentDoc}`;
+
+/**
+ * __useUserByIdQuery__
+ *
+ * To run a query within a React component, call `useUserByIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUserByIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUserByIdQuery({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUserByIdQuery(baseOptions?: Apollo.QueryHookOptions<Types.UserByIdQuery, Types.UserByIdQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<Types.UserByIdQuery, Types.UserByIdQueryVariables>(UserByIdDocument, options);
+      }
+export function useUserByIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Types.UserByIdQuery, Types.UserByIdQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<Types.UserByIdQuery, Types.UserByIdQueryVariables>(UserByIdDocument, options);
+        }
+export type UserByIdQueryHookResult = ReturnType<typeof useUserByIdQuery>;
+export type UserByIdLazyQueryHookResult = ReturnType<typeof useUserByIdLazyQuery>;
+export type UserByIdQueryResult = Apollo.QueryResult<Types.UserByIdQuery, Types.UserByIdQueryVariables>;
+export function refetchUserByIdQuery(variables?: Types.UserByIdQueryVariables) {
+      return { query: UserByIdDocument, variables: variables }
+    }
+export const UserByUsernameDocument = gql`
+    query userByUsername($input: String) {
+  user(username: $input) {
+    ...userWithArticles
+  }
+}
+    ${UserWithArticlesFragmentDoc}`;
+
+/**
+ * __useUserByUsernameQuery__
+ *
+ * To run a query within a React component, call `useUserByUsernameQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUserByUsernameQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUserByUsernameQuery({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUserByUsernameQuery(baseOptions?: Apollo.QueryHookOptions<Types.UserByUsernameQuery, Types.UserByUsernameQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<Types.UserByUsernameQuery, Types.UserByUsernameQueryVariables>(UserByUsernameDocument, options);
+      }
+export function useUserByUsernameLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Types.UserByUsernameQuery, Types.UserByUsernameQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<Types.UserByUsernameQuery, Types.UserByUsernameQueryVariables>(UserByUsernameDocument, options);
+        }
+export type UserByUsernameQueryHookResult = ReturnType<typeof useUserByUsernameQuery>;
+export type UserByUsernameLazyQueryHookResult = ReturnType<typeof useUserByUsernameLazyQuery>;
+export type UserByUsernameQueryResult = Apollo.QueryResult<Types.UserByUsernameQuery, Types.UserByUsernameQueryVariables>;
+export function refetchUserByUsernameQuery(variables?: Types.UserByUsernameQueryVariables) {
+      return { query: UserByUsernameDocument, variables: variables }
     }
