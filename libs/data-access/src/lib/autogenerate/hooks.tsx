@@ -3,7 +3,7 @@ import * as Types from './operations';
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 const defaultOptions = {} as const;
-// Generated on 2022-09-23T20:23:56-06:00
+// Generated on 2022-09-24T17:39:23-06:00
 
 export const AuthorFragmentDoc = gql`
     fragment author on User {
@@ -45,6 +45,44 @@ export const UserFragmentDoc = gql`
   updatedAt
 }
     `;
+export const ArticlesDocument = gql`
+    query articles($input: String) {
+  articles(slug: $input) {
+    ...articleWithComments
+  }
+}
+    ${ArticleWithCommentsFragmentDoc}`;
+
+/**
+ * __useArticlesQuery__
+ *
+ * To run a query within a React component, call `useArticlesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useArticlesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useArticlesQuery({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useArticlesQuery(baseOptions?: Apollo.QueryHookOptions<Types.ArticlesQuery, Types.ArticlesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<Types.ArticlesQuery, Types.ArticlesQueryVariables>(ArticlesDocument, options);
+      }
+export function useArticlesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Types.ArticlesQuery, Types.ArticlesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<Types.ArticlesQuery, Types.ArticlesQueryVariables>(ArticlesDocument, options);
+        }
+export type ArticlesQueryHookResult = ReturnType<typeof useArticlesQuery>;
+export type ArticlesLazyQueryHookResult = ReturnType<typeof useArticlesLazyQuery>;
+export type ArticlesQueryResult = Apollo.QueryResult<Types.ArticlesQuery, Types.ArticlesQueryVariables>;
+export function refetchArticlesQuery(variables?: Types.ArticlesQueryVariables) {
+      return { query: ArticlesDocument, variables: variables }
+    }
 export const MeDocument = gql`
     query me {
   me {
