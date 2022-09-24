@@ -1,0 +1,15 @@
+fragment user on User {
+  _id
+  bio
+  email
+  image
+  username
+  updatedAt
+}
+
+fragment author on User {
+  _id
+  image
+  username
+}
+

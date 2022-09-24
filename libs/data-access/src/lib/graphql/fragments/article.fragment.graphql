@@ -1,0 +1,11 @@
+fragment articleWithComments on Article {
+  _id
+  body
+  description
+  favoritesCount
+  tagList
+  title
+  comments {
+    ...commentWithAuthor
+  }
+}

@@ -1,0 +1,8 @@
+fragment commentWithAuthor on Comment {
+  _id
+  body
+  createdAt
+  author {
+    ...author
+  }
+}
