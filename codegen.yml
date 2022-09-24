@@ -1,0 +1,34 @@
+overwrite: true
+schema: "http://localhost:3333/graphql"
+
+generates:
+  # Get schemas from server
+  libs/data-access/src/lib/autogenerate/types.tsx:
+    documents: 'libs/data-access/src/**/*.graphql'
+    plugins:
+      - time
+      - typescript
+
+  libs/data-access/src/lib/autogenerate/operations.tsx:
+    documents: 'libs/data-access/src/**/*.graphql'
+    preset: import-types
+    presetConfig:
+      typesPath: ./types
+    plugins:
+      - time
+      - typescript-operations
+
+  libs/data-access/src/lib/autogenerate/hooks.tsx:
+    documents: 'libs/data-access/src/**/*.graphql'
+    preset: import-types
+    presetConfig:
+      typesPath: ./operations
+    plugins:
+      - time
+      - typescript-react-apollo
+    config:
+      fetcher: fetch
+      withHOC: false
+      withComponent: false
+      withHooks: true
+      withRefetchFn: true
