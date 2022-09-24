@@ -13,3 +13,14 @@ fragment author on User {
   username
 }
 
+fragment userWithArticles on User {
+  _id
+  bio
+  email
+  image
+  username
+  updatedAt
+  articles {
+    ...articleWithComments
+  }
+}
