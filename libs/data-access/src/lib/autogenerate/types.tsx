@@ -3,7 +3,7 @@ export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-// Generated on 2022-09-24T17:50:16-06:00
+// Generated on 2022-09-24T20:17:21-06:00
 
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -74,6 +74,7 @@ export type LoginInput = {
 export type Mutation = {
   __typename?: 'Mutation';
   addFavorite: Article;
+  addFollow: Profile;
   createArticle: Article;
   createComment: Comment;
   createUser: User;
@@ -81,6 +82,7 @@ export type Mutation = {
   deleteComment: Comment;
   login: Token;
   removeFavorite: Article;
+  removeFollow: Profile;
   updateArtcile: Article;
   updateUser: User;
 };
@@ -88,6 +90,11 @@ export type Mutation = {
 
 export type MutationAddFavoriteArgs = {
   slug: Scalars['String'];
+};
+
+
+export type MutationAddFollowArgs = {
+  username: Scalars['String'];
 };
 
 
@@ -126,6 +133,11 @@ export type MutationRemoveFavoriteArgs = {
 };
 
 
+export type MutationRemoveFollowArgs = {
+  username: Scalars['String'];
+};
+
+
 export type MutationUpdateArtcileArgs = {
   updateArticleData: ArticleUpdateInput;
 };
@@ -135,16 +147,31 @@ export type MutationUpdateUserArgs = {
   updateUserData: UserUpdateInput;
 };
 
+export type Profile = {
+  __typename?: 'Profile';
+  _id: Scalars['String'];
+  bio: Scalars['String'];
+  following: Scalars['Boolean'];
+  image: Scalars['String'];
+  username: Scalars['String'];
+};
+
 export type Query = {
   __typename?: 'Query';
   articles: Array<Maybe<Article>>;
   me: User;
+  profile: Profile;
   user: User;
 };
 
 
 export type QueryArticlesArgs = {
   slug?: InputMaybe<Scalars['String']>;
+};
+
+
+export type QueryProfileArgs = {
+  username: Scalars['String'];
 };
 
 

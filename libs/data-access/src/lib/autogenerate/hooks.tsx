@@ -3,8 +3,17 @@ import * as Types from './operations';
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 const defaultOptions = {} as const;
-// Generated on 2022-09-24T17:50:16-06:00
+// Generated on 2022-09-24T20:17:21-06:00
 
+export const ProfileFragmentDoc = gql`
+    fragment profile on Profile {
+  _id
+  bio
+  following
+  image
+  username
+}
+    `;
 export const UserFragmentDoc = gql`
     fragment user on User {
   _id
@@ -139,6 +148,44 @@ export type MeLazyQueryHookResult = ReturnType<typeof useMeLazyQuery>;
 export type MeQueryResult = Apollo.QueryResult<Types.MeQuery, Types.MeQueryVariables>;
 export function refetchMeQuery(variables?: Types.MeQueryVariables) {
       return { query: MeDocument, variables: variables }
+    }
+export const UserProfileDocument = gql`
+    query userProfile($input: String!) {
+  profile(username: $input) {
+    ...profile
+  }
+}
+    ${ProfileFragmentDoc}`;
+
+/**
+ * __useUserProfileQuery__
+ *
+ * To run a query within a React component, call `useUserProfileQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUserProfileQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUserProfileQuery({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUserProfileQuery(baseOptions: Apollo.QueryHookOptions<Types.UserProfileQuery, Types.UserProfileQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<Types.UserProfileQuery, Types.UserProfileQueryVariables>(UserProfileDocument, options);
+      }
+export function useUserProfileLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Types.UserProfileQuery, Types.UserProfileQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<Types.UserProfileQuery, Types.UserProfileQueryVariables>(UserProfileDocument, options);
+        }
+export type UserProfileQueryHookResult = ReturnType<typeof useUserProfileQuery>;
+export type UserProfileLazyQueryHookResult = ReturnType<typeof useUserProfileLazyQuery>;
+export type UserProfileQueryResult = Apollo.QueryResult<Types.UserProfileQuery, Types.UserProfileQueryVariables>;
+export function refetchUserProfileQuery(variables: Types.UserProfileQueryVariables) {
+      return { query: UserProfileDocument, variables: variables }
     }
 export const UserByEmaildDocument = gql`
     query userByEmaild($input: String) {
