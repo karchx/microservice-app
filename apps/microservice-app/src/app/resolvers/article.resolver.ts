@@ -44,7 +44,7 @@ export class ArticleResolver {
   }
 
   @Mutation(() => Article)
-  async updateArtcile(
+  async updateArticle(
     @Context() ctx: ExtendedGqlExecutionContext,
     @Args('updateArticleData') updateArticleData: ArticleUpdateInput
   ) {

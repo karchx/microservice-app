@@ -24,7 +24,7 @@ export class CommentResolver {
   @Mutation(() => Comment)
   async createComment(
     @Context() ctx: ExtendedGqlExecutionContext,
-    @Args('cretaeCommentData') createCommentData: CommentCreateInput
+    @Args('createCommentData') createCommentData: CommentCreateInput
   ) {
     const authHeader = {
       Authorization: `Bearer ${ctx.token}`,

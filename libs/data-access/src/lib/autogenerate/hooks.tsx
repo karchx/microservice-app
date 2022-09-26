@@ -3,8 +3,46 @@ import * as Types from './operations';
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 const defaultOptions = {} as const;
-// Generated on 2022-09-24T20:17:21-06:00
+// Generated on 2022-09-25T20:07:11-06:00
 
+export const AuthorFragmentDoc = gql`
+    fragment author on User {
+  _id
+  image
+  username
+}
+    `;
+export const ArticleWithAuthorFragmentDoc = gql`
+    fragment articleWithAuthor on Article {
+  _id
+  body
+  description
+  favoritesCount
+  tagList
+  title
+  author {
+    ...author
+  }
+}
+    ${AuthorFragmentDoc}`;
+export const ArticleFragmentDoc = gql`
+    fragment article on Article {
+  _id
+  body
+  description
+  favoritesCount
+  tagList
+  title
+}
+    `;
+export const CommentDeletedFragmentDoc = gql`
+    fragment commentDeleted on Comment {
+  _id
+  body
+  createdAt
+  deletedAt
+}
+    `;
 export const ProfileFragmentDoc = gql`
     fragment profile on Profile {
   _id
@@ -22,13 +60,6 @@ export const UserFragmentDoc = gql`
   image
   username
   updatedAt
-}
-    `;
-export const AuthorFragmentDoc = gql`
-    fragment author on User {
-  _id
-  image
-  username
 }
     `;
 export const CommentWithAuthorFragmentDoc = gql`
@@ -67,6 +98,369 @@ export const UserWithArticlesFragmentDoc = gql`
   }
 }
     ${ArticleWithCommentsFragmentDoc}`;
+export const AddFavoriteDocument = gql`
+    mutation addFavorite($input: String!) {
+  addFavorite(slug: $input) {
+    ...articleWithComments
+  }
+}
+    ${ArticleWithCommentsFragmentDoc}`;
+export type AddFavoriteMutationFn = Apollo.MutationFunction<Types.AddFavoriteMutation, Types.AddFavoriteMutationVariables>;
+
+/**
+ * __useAddFavoriteMutation__
+ *
+ * To run a mutation, you first call `useAddFavoriteMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddFavoriteMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addFavoriteMutation, { data, loading, error }] = useAddFavoriteMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useAddFavoriteMutation(baseOptions?: Apollo.MutationHookOptions<Types.AddFavoriteMutation, Types.AddFavoriteMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<Types.AddFavoriteMutation, Types.AddFavoriteMutationVariables>(AddFavoriteDocument, options);
+      }
+export type AddFavoriteMutationHookResult = ReturnType<typeof useAddFavoriteMutation>;
+export type AddFavoriteMutationResult = Apollo.MutationResult<Types.AddFavoriteMutation>;
+export type AddFavoriteMutationOptions = Apollo.BaseMutationOptions<Types.AddFavoriteMutation, Types.AddFavoriteMutationVariables>;
+export const AddFollowDocument = gql`
+    mutation addFollow($input: String!) {
+  addFollow(username: $input) {
+    ...profile
+  }
+}
+    ${ProfileFragmentDoc}`;
+export type AddFollowMutationFn = Apollo.MutationFunction<Types.AddFollowMutation, Types.AddFollowMutationVariables>;
+
+/**
+ * __useAddFollowMutation__
+ *
+ * To run a mutation, you first call `useAddFollowMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddFollowMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addFollowMutation, { data, loading, error }] = useAddFollowMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useAddFollowMutation(baseOptions?: Apollo.MutationHookOptions<Types.AddFollowMutation, Types.AddFollowMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<Types.AddFollowMutation, Types.AddFollowMutationVariables>(AddFollowDocument, options);
+      }
+export type AddFollowMutationHookResult = ReturnType<typeof useAddFollowMutation>;
+export type AddFollowMutationResult = Apollo.MutationResult<Types.AddFollowMutation>;
+export type AddFollowMutationOptions = Apollo.BaseMutationOptions<Types.AddFollowMutation, Types.AddFollowMutationVariables>;
+export const CreateArticleDocument = gql`
+    mutation createArticle($input: ArticleCreateInput!) {
+  createArticle(createArticleData: $input) {
+    ...articleWithAuthor
+  }
+}
+    ${ArticleWithAuthorFragmentDoc}`;
+export type CreateArticleMutationFn = Apollo.MutationFunction<Types.CreateArticleMutation, Types.CreateArticleMutationVariables>;
+
+/**
+ * __useCreateArticleMutation__
+ *
+ * To run a mutation, you first call `useCreateArticleMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateArticleMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createArticleMutation, { data, loading, error }] = useCreateArticleMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateArticleMutation(baseOptions?: Apollo.MutationHookOptions<Types.CreateArticleMutation, Types.CreateArticleMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<Types.CreateArticleMutation, Types.CreateArticleMutationVariables>(CreateArticleDocument, options);
+      }
+export type CreateArticleMutationHookResult = ReturnType<typeof useCreateArticleMutation>;
+export type CreateArticleMutationResult = Apollo.MutationResult<Types.CreateArticleMutation>;
+export type CreateArticleMutationOptions = Apollo.BaseMutationOptions<Types.CreateArticleMutation, Types.CreateArticleMutationVariables>;
+export const CreateCommentDocument = gql`
+    mutation createComment($input: CommentCreateInput!) {
+  createComment(createCommentData: $input) {
+    ...commentWithAuthor
+  }
+}
+    ${CommentWithAuthorFragmentDoc}`;
+export type CreateCommentMutationFn = Apollo.MutationFunction<Types.CreateCommentMutation, Types.CreateCommentMutationVariables>;
+
+/**
+ * __useCreateCommentMutation__
+ *
+ * To run a mutation, you first call `useCreateCommentMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateCommentMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createCommentMutation, { data, loading, error }] = useCreateCommentMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useCreateCommentMutation(baseOptions?: Apollo.MutationHookOptions<Types.CreateCommentMutation, Types.CreateCommentMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<Types.CreateCommentMutation, Types.CreateCommentMutationVariables>(CreateCommentDocument, options);
+      }
+export type CreateCommentMutationHookResult = ReturnType<typeof useCreateCommentMutation>;
+export type CreateCommentMutationResult = Apollo.MutationResult<Types.CreateCommentMutation>;
+export type CreateCommentMutationOptions = Apollo.BaseMutationOptions<Types.CreateCommentMutation, Types.CreateCommentMutationVariables>;
+export const DeleteArticleDocument = gql`
+    mutation deleteArticle($input: String!) {
+  deleteArticle(slug: $input) {
+    ...articleWithAuthor
+  }
+}
+    ${ArticleWithAuthorFragmentDoc}`;
+export type DeleteArticleMutationFn = Apollo.MutationFunction<Types.DeleteArticleMutation, Types.DeleteArticleMutationVariables>;
+
+/**
+ * __useDeleteArticleMutation__
+ *
+ * To run a mutation, you first call `useDeleteArticleMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteArticleMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteArticleMutation, { data, loading, error }] = useDeleteArticleMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useDeleteArticleMutation(baseOptions?: Apollo.MutationHookOptions<Types.DeleteArticleMutation, Types.DeleteArticleMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<Types.DeleteArticleMutation, Types.DeleteArticleMutationVariables>(DeleteArticleDocument, options);
+      }
+export type DeleteArticleMutationHookResult = ReturnType<typeof useDeleteArticleMutation>;
+export type DeleteArticleMutationResult = Apollo.MutationResult<Types.DeleteArticleMutation>;
+export type DeleteArticleMutationOptions = Apollo.BaseMutationOptions<Types.DeleteArticleMutation, Types.DeleteArticleMutationVariables>;
+export const DeleteCommentDocument = gql`
+    mutation deleteComment($input: CommentDeleteInput!) {
+  deleteComment(deleteCommentData: $input) {
+    ...commentDeleted
+  }
+}
+    ${CommentDeletedFragmentDoc}`;
+export type DeleteCommentMutationFn = Apollo.MutationFunction<Types.DeleteCommentMutation, Types.DeleteCommentMutationVariables>;
+
+/**
+ * __useDeleteCommentMutation__
+ *
+ * To run a mutation, you first call `useDeleteCommentMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteCommentMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteCommentMutation, { data, loading, error }] = useDeleteCommentMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useDeleteCommentMutation(baseOptions?: Apollo.MutationHookOptions<Types.DeleteCommentMutation, Types.DeleteCommentMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<Types.DeleteCommentMutation, Types.DeleteCommentMutationVariables>(DeleteCommentDocument, options);
+      }
+export type DeleteCommentMutationHookResult = ReturnType<typeof useDeleteCommentMutation>;
+export type DeleteCommentMutationResult = Apollo.MutationResult<Types.DeleteCommentMutation>;
+export type DeleteCommentMutationOptions = Apollo.BaseMutationOptions<Types.DeleteCommentMutation, Types.DeleteCommentMutationVariables>;
+export const LoginDocument = gql`
+    mutation login($input: LoginInput!) {
+  login(loginData: $input) {
+    access_token
+  }
+}
+    `;
+export type LoginMutationFn = Apollo.MutationFunction<Types.LoginMutation, Types.LoginMutationVariables>;
+
+/**
+ * __useLoginMutation__
+ *
+ * To run a mutation, you first call `useLoginMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useLoginMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [loginMutation, { data, loading, error }] = useLoginMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useLoginMutation(baseOptions?: Apollo.MutationHookOptions<Types.LoginMutation, Types.LoginMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<Types.LoginMutation, Types.LoginMutationVariables>(LoginDocument, options);
+      }
+export type LoginMutationHookResult = ReturnType<typeof useLoginMutation>;
+export type LoginMutationResult = Apollo.MutationResult<Types.LoginMutation>;
+export type LoginMutationOptions = Apollo.BaseMutationOptions<Types.LoginMutation, Types.LoginMutationVariables>;
+export const RemoveFavoriteDocument = gql`
+    mutation removeFavorite($input: String!) {
+  removeFavorite(slug: $input) {
+    ...articleWithComments
+  }
+}
+    ${ArticleWithCommentsFragmentDoc}`;
+export type RemoveFavoriteMutationFn = Apollo.MutationFunction<Types.RemoveFavoriteMutation, Types.RemoveFavoriteMutationVariables>;
+
+/**
+ * __useRemoveFavoriteMutation__
+ *
+ * To run a mutation, you first call `useRemoveFavoriteMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRemoveFavoriteMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [removeFavoriteMutation, { data, loading, error }] = useRemoveFavoriteMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useRemoveFavoriteMutation(baseOptions?: Apollo.MutationHookOptions<Types.RemoveFavoriteMutation, Types.RemoveFavoriteMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<Types.RemoveFavoriteMutation, Types.RemoveFavoriteMutationVariables>(RemoveFavoriteDocument, options);
+      }
+export type RemoveFavoriteMutationHookResult = ReturnType<typeof useRemoveFavoriteMutation>;
+export type RemoveFavoriteMutationResult = Apollo.MutationResult<Types.RemoveFavoriteMutation>;
+export type RemoveFavoriteMutationOptions = Apollo.BaseMutationOptions<Types.RemoveFavoriteMutation, Types.RemoveFavoriteMutationVariables>;
+export const RemoveFollowDocument = gql`
+    mutation removeFollow($input: String!) {
+  removeFollow(username: $input) {
+    ...profile
+  }
+}
+    ${ProfileFragmentDoc}`;
+export type RemoveFollowMutationFn = Apollo.MutationFunction<Types.RemoveFollowMutation, Types.RemoveFollowMutationVariables>;
+
+/**
+ * __useRemoveFollowMutation__
+ *
+ * To run a mutation, you first call `useRemoveFollowMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRemoveFollowMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [removeFollowMutation, { data, loading, error }] = useRemoveFollowMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useRemoveFollowMutation(baseOptions?: Apollo.MutationHookOptions<Types.RemoveFollowMutation, Types.RemoveFollowMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<Types.RemoveFollowMutation, Types.RemoveFollowMutationVariables>(RemoveFollowDocument, options);
+      }
+export type RemoveFollowMutationHookResult = ReturnType<typeof useRemoveFollowMutation>;
+export type RemoveFollowMutationResult = Apollo.MutationResult<Types.RemoveFollowMutation>;
+export type RemoveFollowMutationOptions = Apollo.BaseMutationOptions<Types.RemoveFollowMutation, Types.RemoveFollowMutationVariables>;
+export const UpdateArticleDocument = gql`
+    mutation updateArticle($input: ArticleUpdateInput!) {
+  updateArticle(updateArticleData: $input) {
+    ...articleWithAuthor
+  }
+}
+    ${ArticleWithAuthorFragmentDoc}`;
+export type UpdateArticleMutationFn = Apollo.MutationFunction<Types.UpdateArticleMutation, Types.UpdateArticleMutationVariables>;
+
+/**
+ * __useUpdateArticleMutation__
+ *
+ * To run a mutation, you first call `useUpdateArticleMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateArticleMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateArticleMutation, { data, loading, error }] = useUpdateArticleMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdateArticleMutation(baseOptions?: Apollo.MutationHookOptions<Types.UpdateArticleMutation, Types.UpdateArticleMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<Types.UpdateArticleMutation, Types.UpdateArticleMutationVariables>(UpdateArticleDocument, options);
+      }
+export type UpdateArticleMutationHookResult = ReturnType<typeof useUpdateArticleMutation>;
+export type UpdateArticleMutationResult = Apollo.MutationResult<Types.UpdateArticleMutation>;
+export type UpdateArticleMutationOptions = Apollo.BaseMutationOptions<Types.UpdateArticleMutation, Types.UpdateArticleMutationVariables>;
+export const UpdateUserDocument = gql`
+    mutation updateUser($input: UserUpdateInput!) {
+  updateUser(updateUserData: $input) {
+    ...user
+  }
+}
+    ${UserFragmentDoc}`;
+export type UpdateUserMutationFn = Apollo.MutationFunction<Types.UpdateUserMutation, Types.UpdateUserMutationVariables>;
+
+/**
+ * __useUpdateUserMutation__
+ *
+ * To run a mutation, you first call `useUpdateUserMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateUserMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateUserMutation, { data, loading, error }] = useUpdateUserMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useUpdateUserMutation(baseOptions?: Apollo.MutationHookOptions<Types.UpdateUserMutation, Types.UpdateUserMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<Types.UpdateUserMutation, Types.UpdateUserMutationVariables>(UpdateUserDocument, options);
+      }
+export type UpdateUserMutationHookResult = ReturnType<typeof useUpdateUserMutation>;
+export type UpdateUserMutationResult = Apollo.MutationResult<Types.UpdateUserMutation>;
+export type UpdateUserMutationOptions = Apollo.BaseMutationOptions<Types.UpdateUserMutation, Types.UpdateUserMutationVariables>;
 export const ArticlesDocument = gql`
     query articles($input: String) {
   articles(slug: $input) {

@@ -3,7 +3,7 @@ export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-// Generated on 2022-09-24T20:17:21-06:00
+// Generated on 2022-09-25T20:07:10-06:00
 
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -83,7 +83,7 @@ export type Mutation = {
   login: Token;
   removeFavorite: Article;
   removeFollow: Profile;
-  updateArtcile: Article;
+  updateArticle: Article;
   updateUser: User;
 };
 
@@ -104,7 +104,7 @@ export type MutationCreateArticleArgs = {
 
 
 export type MutationCreateCommentArgs = {
-  cretaeCommentData: CommentCreateInput;
+  createCommentData: CommentCreateInput;
 };
 
 
@@ -138,7 +138,7 @@ export type MutationRemoveFollowArgs = {
 };
 
 
-export type MutationUpdateArtcileArgs = {
+export type MutationUpdateArticleArgs = {
   updateArticleData: ArticleUpdateInput;
 };
 

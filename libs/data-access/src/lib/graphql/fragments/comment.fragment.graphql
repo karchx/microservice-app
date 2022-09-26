@@ -6,3 +6,10 @@ fragment commentWithAuthor on Comment {
     ...author
   }
 }
+
+fragment commentDeleted on Comment {
+  _id
+  body
+  createdAt
+  deletedAt
+}
