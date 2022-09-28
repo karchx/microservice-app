@@ -1,16 +1,11 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
-import { Button } from '@mui/material';
 import { UserDto } from '@microservice-app/models';
-import {
-  StyledPaper,
-  StyledTextField,
-} from '../../components/components.styled';
 import { useLoginUser } from '../../hooks';
 import { useAppDispatch } from '../../store/hooks';
-import { StyledRegisterLink, StyledButtonBar } from './login.styled';
 import { ConfigContext } from '../../context/routesContext';
 import { useNavigate } from 'react-router-dom';
 import { loginStateChangedAction } from '../../store/authStore';
+import { Link, Button, Form, InputField } from '../../components';
 
 export interface LoginProps {}
 
@@ -21,11 +16,12 @@ export function Login(props: LoginProps) {
   const { setToken: setTokenInHeaders } = React.useContext(ConfigContext);
   const [{ data: loginData, loading, error }, loginUser] = useLoginUser();
 
-  const handleSubmit = () => {
+  const handleSubmit = (e: React.MouseEvent<HTMLInputElement>) => {
+    e.preventDefault();
     loginUser({ data: { ...loginFormData } });
   };
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: ChangeEvent<HTMLButtonElement>) => {
     setLoginFormData({ ...loginFormData, [e.target.name]: e.target.value });
   };
 
@@ -39,33 +35,40 @@ export function Login(props: LoginProps) {
   }, [loginData, dispatch, setTokenInHeaders]);
 
   return (
-    <StyledPaper>
-      <form>
-        <StyledTextField
-          name="email"
-          variant="outlined"
-          label="Email"
-          fullWidth
-          onChange={handleInputChange}
-        />
-        <StyledTextField
-          name="password"
-          variant="outlined"
-          label="Password"
-          type="password"
-          fullWidth
-          onChange={handleInputChange}
-        />
+    <div>
+      <div className="auth-page">
+        <div className="container page">
+          <div className="row">
+            <div className="col-md-6 offset-md-3 col-xs-12">
+              <h1 className="text-xs-center">Login</h1>
+              <p className="text-xs-center">
+                <Link href="/register">Need an account?</Link>
+              </p>
 
-        <StyledButtonBar>
-          <Button variant="contained" onClick={handleSubmit}>
-            Log me In!
-          </Button>
-          <StyledRegisterLink to="/register">
-            Not registered yet?
-          </StyledRegisterLink>
-        </StyledButtonBar>
-      </form>
-    </StyledPaper>
+              <Form>
+                <InputField
+                  className="form-control form-control-lg"
+                  type="text"
+                  placeholder="Email"
+                  name="email"
+                  onChange={handleInputChange}
+                />
+                <InputField
+                  className="form-control form-control-lg"
+                  type="password"
+                  placeholder="Password"
+                  name="password"
+                  onChange={handleInputChange}
+                />
+
+                <Button size="lg" onClick={handleSubmit}>
+                  Login me In!
+                </Button>
+              </Form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
