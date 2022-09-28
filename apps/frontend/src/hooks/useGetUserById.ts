@@ -17,5 +17,5 @@ export const useGetUserById = ({ id }: GetUserByIdRequest) => {
     url: `${userBaseUrl}/user/${id}`,
     method: 'GET',
     headers,
-  });
+  }, {manual: true});
 };

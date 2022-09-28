@@ -12,5 +12,5 @@ export const useGetArticleFeed = () => {
     url: `${articleBaseUrl}/articles/feed`,
     method: 'GET',
     headers,
-  });
+  }, {manual: true});
 };
