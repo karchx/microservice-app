@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Banner, Link } from '../../components';
-import { ArticleItem } from '../../components/article-item/article-item';
+import { ArtilceList, Banner, Link } from '../../components';
 import { useGetArticleFeed, useGetArticles } from '../../hooks';
 import {
   setArticleFeedAction,
@@ -98,6 +97,7 @@ export function Home(props: HomeProps) {
 
             {/* Feed */}
             <div className="article-preview">No articles are here...yet.</div>
+            <ArtilceList articles={articleData} />
           </div>
         </div>
       </div>
