@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Banner } from '../../components';
+import { Banner, Link } from '../../components';
 import { ArticleItem } from '../../components/article-item/article-item';
 import { useGetArticleFeed, useGetArticles } from '../../hooks';
 import {
@@ -66,6 +66,40 @@ export function Home(props: HomeProps) {
           <h1 className="logo-font">conduit</h1>
           <p>A place to share your knowledge.</p>
         </Banner>
+      </div>
+
+      <div className="container page">
+        <div className="row">
+          <div className="col-md-9">
+            <div className="feed-toggle">
+              <ul className="nav nav-pills outline-active">
+                {/*validar que exista token (inicio de sesion)*/}
+                <li className="nav-item">
+                  <Link
+                    className="nav-link"
+                    href="/"
+                    onClick={() => tabSelect('feed')}
+                  >
+                    Your feed
+                  </Link>
+                </li>
+
+                <li className="nav-item">
+                  <Link
+                    className="nav-link"
+                    href="/"
+                    onClick={() => tabSelect('global')}
+                  >
+                    Global feed
+                  </Link>
+                </li>
+              </ul>
+            </div>
+
+            {/* Feed */}
+            <div className="article-preview">No articles are here...yet.</div>
+          </div>
+        </div>
       </div>
     </div>
   );
