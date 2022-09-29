@@ -8,9 +8,12 @@ export const useGetArticleFeed = () => {
     routesConfig: { articleBaseUrl, headers },
   } = React.useContext(ConfigContext);
 
-  return useAxios<ArticleDto[]>({
-    url: `${articleBaseUrl}/articles/feed`,
-    method: 'GET',
-    headers,
-  }, {manual: true});
+  return useAxios<ArticleDto[]>(
+    {
+      url: `${articleBaseUrl}/articles/feed`,
+      method: 'GET',
+      headers,
+    },
+    { manual: true }
+  );
 };

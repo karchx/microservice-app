@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Banner } from '../../components';
 import { ArticleItem } from '../../components/article-item/article-item';
 import { useGetArticleFeed, useGetArticles } from '../../hooks';
 import {
@@ -59,6 +60,18 @@ export function Home(props: HomeProps) {
   }
 
   return (
+    <div>
+      <div className="home-page">
+        <Banner>
+          <h1 className="logo-font">conduit</h1>
+          <p>A place to share your knowledge.</p>
+        </Banner>
+      </div>
+    </div>
+  );
+}
+
+/*
     <StyledHome>
       <StyledTabSelector>
         <StyledTabButton
@@ -96,5 +109,4 @@ export function Home(props: HomeProps) {
         </StyledTabContent>
       )}
     </StyledHome>
-  );
-}
+*/

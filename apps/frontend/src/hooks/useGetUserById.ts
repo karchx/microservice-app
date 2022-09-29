@@ -13,9 +13,12 @@ export const useGetUserById = ({ id }: GetUserByIdRequest) => {
     routesConfig: { userBaseUrl, headers },
   } = React.useContext(ConfigContext);
 
-  return useAxios<UserDto>({
-    url: `${userBaseUrl}/user/${id}`,
-    method: 'GET',
-    headers,
-  }, {manual: true});
+  return useAxios<UserDto>(
+    {
+      url: `${userBaseUrl}/user/${id}`,
+      method: 'GET',
+      headers,
+    },
+    { manual: true }
+  );
 };
