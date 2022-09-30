@@ -7,8 +7,8 @@ interface ArticleProps {
 
 export const ArtilceList = (props: ArticleProps) => (
   <>
-    {props.articles?.map((article) => (
-      <ArticleItem article={article} />
+    {props.articles?.map((article, i) => (
+      <ArticleItem article={article} key={i} />
     ))}
   </>
 );

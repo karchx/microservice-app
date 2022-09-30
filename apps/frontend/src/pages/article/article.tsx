@@ -1,15 +1,7 @@
-import { Typography } from '@mui/material';
+import { Banner } from '../../components';
 import { useAppSelector } from '../../store/hooks';
-import {
-  StyledArticle,
-  StyledArticleAuthor,
-  StyledArticleBody,
-  StyledArticleContent,
-  StyledArticleSidebar,
-  StyledArticleTags,
-} from './article.styled';
 
-export interface ArticleProps {}
+interface ArticleProps {}
 
 export function Article(props: ArticleProps) {
   const {
@@ -17,6 +9,17 @@ export function Article(props: ArticleProps) {
   } = useAppSelector((state) => state.article);
 
   return (
+    <div>
+      <div className="article-page">
+        <Banner>
+          <h1>{article.title}</h1>
+        </Banner>
+      </div>
+    </div>
+  );
+}
+
+/*
     <StyledArticle>
       <Typography variant="h3">{article.title}</Typography>
       <StyledArticleContent>
@@ -30,5 +33,4 @@ export function Article(props: ArticleProps) {
         </StyledArticleSidebar>
       </StyledArticleContent>
     </StyledArticle>
-  );
-}
+*/
