@@ -14,6 +14,6 @@ export const useLoginUser = () => {
       method: 'POST',
       headers,
     },
-    { manual: true }
+    { manual: false }
   );
 };

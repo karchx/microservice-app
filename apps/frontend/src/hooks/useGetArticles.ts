@@ -14,6 +14,6 @@ export const useGetArticles = () => {
       method: 'GET',
       headers,
     },
-    { manual: true }
+    { manual: false }
   );
 };

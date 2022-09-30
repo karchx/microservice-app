@@ -19,6 +19,6 @@ export const useGetUserById = ({ id }: GetUserByIdRequest) => {
       method: 'GET',
       headers,
     },
-    { manual: true }
+    { manual: false }
   );
 };

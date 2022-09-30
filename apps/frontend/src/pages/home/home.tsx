@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ArtilceList, Banner, Link } from '../../components';
 import { useGetArticleFeed, useGetArticles } from '../../hooks';
 import {
@@ -6,12 +6,6 @@ import {
   setArticlesAction,
 } from '../../store/articleStore';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import {
-  StyledHome,
-  StyledTabButton,
-  StyledTabContent,
-  StyledTabSelector,
-} from './home.styled';
 
 type TabType = 'global' | 'feed';
 
@@ -23,6 +17,7 @@ export function Home(props: HomeProps) {
     useGetArticles();
   const [{ data: feedData, loading: feedLoading }, refetchFeed] =
     useGetArticleFeed();
+
   const { isUserLoggedIn } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
 

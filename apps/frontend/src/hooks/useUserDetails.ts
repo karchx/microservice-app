@@ -14,6 +14,6 @@ export const useUserDetails = () => {
       method: 'GET',
       headers,
     },
-    { manual: true }
+    { manual: false }
   );
 };

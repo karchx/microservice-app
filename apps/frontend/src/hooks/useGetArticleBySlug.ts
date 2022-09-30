@@ -1,16 +1,16 @@
-import { ArticleDto } from '@microservice-app/models';
-import useAxios from 'axios-hooks';
 import React from 'react';
+import useAxios from 'axios-hooks';
+import { ArticleDto } from '@microservice-app/models';
 import { ConfigContext } from '../context/routesContext';
 
-export const useGetArticleFeed = () => {
+export const useGetArticleBySlug = (slug: string) => {
   const {
     routesConfig: { articleBaseUrl, headers },
   } = React.useContext(ConfigContext);
 
-  return useAxios<ArticleDto[]>(
+  return useAxios<ArticleDto>(
     {
-      url: `${articleBaseUrl}/articles/feed`,
+      url: `${articleBaseUrl}/articles/${slug}`,
       method: 'GET',
       headers,
     },
