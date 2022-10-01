@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { TokenDto, UserDto } from '@microservice-app/models';
 import { Hash, PromisifyHttpService } from '@microservice-app/shared';
 import { ConfigService } from '@nestjs/config';
@@ -26,7 +26,8 @@ export class AuthService {
     const user = await this.promisifyHttpService.get(
       `${this.userFeatureBaeUrl}/user/email/${email}`
     );
-    const isValidPassword = Hash.compare(password, user.password);
+    const isValidPassword = await Hash.compare(password, user.password);
+    console.log(isValidPassword);
 
     if (user && isValidPassword) {
       return user;
@@ -40,7 +41,13 @@ export class AuthService {
    * @return Promise<TokenDto>
    */
   async login(user: UserDto): Promise<TokenDto> {
-    const payload = { username: user.email, sub: user._id };
-    return { access_token: this.jwtService.sign(payload) };
+    const userValid = await this.validateUser(user.email, user.password);
+
+    if (!userValid) {
+      throw new UnauthorizedException();
+    } else {
+      const payload = { username: user.email, sub: user._id };
+      return { access_token: this.jwtService.sign(payload) };
+    }
   }
 }
