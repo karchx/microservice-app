@@ -26,6 +26,7 @@ export function Login(props: LoginProps) {
   };
 
   useEffect(() => {
+    console.log(loginData);
     if (loginData) {
       localStorage.setItem('access_token', loginData.access_token);
       setTokenInHeaders(loginData.access_token);
