@@ -1,33 +1,17 @@
-import { ArticleDto } from '@microservice-app/models';
-import { useNavigate } from 'react-router-dom';
-import { useGetUserById } from '../../../hooks';
-import { setActiveArticleAction } from '../../../store/articleStore';
-import { useAppDispatch } from '../../../store/hooks';
+import { ArticleWithAuthorFragment } from '@microservice-app/data-access';
 import { Link } from '../../designSystem/Link';
 import { format } from 'date-fns';
 
 export interface ArticleItemProps {
-  article: ArticleDto;
+  article: ArticleWithAuthorFragment;
 }
 
 export function ArticleItem({ article }: ArticleItemProps) {
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-
-  const [{ data: author, loading }, refetch] = useGetUserById({
-    id: article.authorId,
-  });
-
-  if (loading) {
+  if (!article) {
     return null;
   }
 
-  const handleClick = () => {
-    dispatch(setActiveArticleAction({ article, author }));
-    navigate('/article');
-  };
-
-  const formatDate = (date: Date): string => {
+  const formatDate = (date: string): string => {
     return format(new Date(date), 'MMM d, y');
   };
 
@@ -36,7 +20,7 @@ export function ArticleItem({ article }: ArticleItemProps) {
       <div className="article-meta">
         <div className="info">
           <Link className="author" href="/">
-            Keneth
+            {article.author.username}
           </Link>
           <span className="date">{formatDate(article.createdAt)}</span>
         </div>
@@ -57,21 +41,3 @@ export function ArticleItem({ article }: ArticleItemProps) {
     </div>
   );
 }
-
-/*
- <StyledPostItem onClick={handleClick}>
-      <StyledCard elevation={6}>
-        <CardContent>
-          <Typography variant="h5">{article.title}</Typography>
-          <StyledCardDetails>
-            <StyledCardTagDetails>
-              {article.tagList.join(', ')}
-            </StyledCardTagDetails>
-            <StyledCardAuthorDetails>
-              {author?.username}
-            </StyledCardAuthorDetails>
-          </StyledCardDetails>
-        </CardContent>
-      </StyledCard>
-    </StyledPostItem>
-*/

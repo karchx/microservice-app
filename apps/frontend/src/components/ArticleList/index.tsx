@@ -1,14 +1,17 @@
-import { ArticleDto } from '@microservice-app/models';
 import { ArticleItem } from './Article';
+import { ArticlesWithAuthorsQuery } from '@microservice-app/data-access';
 
 interface ArticleProps {
-  articles: ArticleDto[];
+  data: ArticlesWithAuthorsQuery;
 }
 
-export const ArtilceList = (props: ArticleProps) => (
+export const ArtilceList = ({ data }: ArticleProps) => (
   <>
-    {props.articles?.map((article, i) => (
+    {data.articles?.map((article, i) => (
       <ArticleItem article={article} key={i} />
     ))}
   </>
 );
+
+/*
+ */
