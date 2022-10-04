@@ -57,8 +57,13 @@ export function Home(props: HomeProps) {
             </div>
 
             {/* Feed */}
-            <div className="article-preview">No articles are here...yet.</div>
-            <ArtilceList data={data} />
+            {loading ? (
+              <div className="article-preview">loading...</div>
+            ) : !data ? (
+              <div className="article-preview">No articles are here...yet.</div>
+            ) : (
+              <ArtilceList data={data} />
+            )}
           </div>
         </div>
       </div>
