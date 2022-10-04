@@ -61,19 +61,3 @@ export function Article(props: ArticleProps) {
     </div>
   );
 }
-
-/*
-    <StyledArticle>
-      <Typography variant="h3">{article.title}</Typography>
-      <StyledArticleContent>
-        <StyledArticleBody>
-          <Typography variant="h6">{article.body}</Typography>
-        </StyledArticleBody>
-
-        <StyledArticleSidebar>
-          <StyledArticleAuthor>Author: {author?.username}</StyledArticleAuthor>
-          <StyledArticleTags>{article.tagList.join(', ')}</StyledArticleTags>
-        </StyledArticleSidebar>
-      </StyledArticleContent>
-    </StyledArticle>
-*/
