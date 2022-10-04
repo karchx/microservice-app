@@ -3,7 +3,7 @@ import * as Types from './operations';
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 const defaultOptions = {} as const;
-// Generated on 2022-09-25T20:07:11-06:00
+// Generated on 2022-10-03T20:42:08-06:00
 
 export const AuthorFragmentDoc = gql`
     fragment author on User {
@@ -20,6 +20,8 @@ export const ArticleWithAuthorFragmentDoc = gql`
   favoritesCount
   tagList
   title
+  slug
+  createdAt
   author {
     ...author
   }
@@ -33,6 +35,8 @@ export const ArticleFragmentDoc = gql`
   favoritesCount
   tagList
   title
+  slug
+  createdAt
 }
     `;
 export const CommentDeletedFragmentDoc = gql`
@@ -80,6 +84,8 @@ export const ArticleWithCommentsFragmentDoc = gql`
   favoritesCount
   tagList
   title
+  slug
+  createdAt
   comments {
     ...commentWithAuthor
   }
@@ -498,6 +504,43 @@ export type ArticlesLazyQueryHookResult = ReturnType<typeof useArticlesLazyQuery
 export type ArticlesQueryResult = Apollo.QueryResult<Types.ArticlesQuery, Types.ArticlesQueryVariables>;
 export function refetchArticlesQuery(variables?: Types.ArticlesQueryVariables) {
       return { query: ArticlesDocument, variables: variables }
+    }
+export const ArticlesWithAuthorsDocument = gql`
+    query articlesWithAuthors {
+  articles {
+    ...articleWithAuthor
+  }
+}
+    ${ArticleWithAuthorFragmentDoc}`;
+
+/**
+ * __useArticlesWithAuthorsQuery__
+ *
+ * To run a query within a React component, call `useArticlesWithAuthorsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useArticlesWithAuthorsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useArticlesWithAuthorsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useArticlesWithAuthorsQuery(baseOptions?: Apollo.QueryHookOptions<Types.ArticlesWithAuthorsQuery, Types.ArticlesWithAuthorsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<Types.ArticlesWithAuthorsQuery, Types.ArticlesWithAuthorsQueryVariables>(ArticlesWithAuthorsDocument, options);
+      }
+export function useArticlesWithAuthorsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Types.ArticlesWithAuthorsQuery, Types.ArticlesWithAuthorsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<Types.ArticlesWithAuthorsQuery, Types.ArticlesWithAuthorsQueryVariables>(ArticlesWithAuthorsDocument, options);
+        }
+export type ArticlesWithAuthorsQueryHookResult = ReturnType<typeof useArticlesWithAuthorsQuery>;
+export type ArticlesWithAuthorsLazyQueryHookResult = ReturnType<typeof useArticlesWithAuthorsLazyQuery>;
+export type ArticlesWithAuthorsQueryResult = Apollo.QueryResult<Types.ArticlesWithAuthorsQuery, Types.ArticlesWithAuthorsQueryVariables>;
+export function refetchArticlesWithAuthorsQuery(variables?: Types.ArticlesWithAuthorsQueryVariables) {
+      return { query: ArticlesWithAuthorsDocument, variables: variables }
     }
 export const MeDocument = gql`
     query me {

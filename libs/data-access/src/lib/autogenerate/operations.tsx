@@ -1,12 +1,12 @@
 import * as Types from './types';
 
-// Generated on 2022-09-25T20:07:11-06:00
+// Generated on 2022-10-03T20:42:08-06:00
 
-export type ArticleWithCommentsFragment = { __typename?: 'Article', _id: string, body: string, description: string, favoritesCount: number, tagList: Array<string | null>, title: string, comments: Array<{ __typename?: 'Comment', _id: string, body: string, createdAt: string, author: { __typename?: 'User', _id: string, image?: string | null, username: string } }> };
+export type ArticleWithCommentsFragment = { __typename?: 'Article', _id: string, body: string, description: string, favoritesCount: number, tagList: Array<string | null>, title: string, slug: string, createdAt: string, comments: Array<{ __typename?: 'Comment', _id: string, body: string, createdAt: string, author: { __typename?: 'User', _id: string, image?: string | null, username: string } }> };
 
-export type ArticleWithAuthorFragment = { __typename?: 'Article', _id: string, body: string, description: string, favoritesCount: number, tagList: Array<string | null>, title: string, author: { __typename?: 'User', _id: string, image?: string | null, username: string } };
+export type ArticleWithAuthorFragment = { __typename?: 'Article', _id: string, body: string, description: string, favoritesCount: number, tagList: Array<string | null>, title: string, slug: string, createdAt: string, author: { __typename?: 'User', _id: string, image?: string | null, username: string } };
 
-export type ArticleFragment = { __typename?: 'Article', _id: string, body: string, description: string, favoritesCount: number, tagList: Array<string | null>, title: string };
+export type ArticleFragment = { __typename?: 'Article', _id: string, body: string, description: string, favoritesCount: number, tagList: Array<string | null>, title: string, slug: string, createdAt: string };
 
 export type CommentWithAuthorFragment = { __typename?: 'Comment', _id: string, body: string, createdAt: string, author: { __typename?: 'User', _id: string, image?: string | null, username: string } };
 
@@ -18,14 +18,14 @@ export type UserFragment = { __typename?: 'User', _id: string, bio?: string | nu
 
 export type AuthorFragment = { __typename?: 'User', _id: string, image?: string | null, username: string };
 
-export type UserWithArticlesFragment = { __typename?: 'User', _id: string, bio?: string | null, email: string, image?: string | null, username: string, updatedAt: string, articles: Array<{ __typename?: 'Article', _id: string, body: string, description: string, favoritesCount: number, tagList: Array<string | null>, title: string, comments: Array<{ __typename?: 'Comment', _id: string, body: string, createdAt: string, author: { __typename?: 'User', _id: string, image?: string | null, username: string } }> }> };
+export type UserWithArticlesFragment = { __typename?: 'User', _id: string, bio?: string | null, email: string, image?: string | null, username: string, updatedAt: string, articles: Array<{ __typename?: 'Article', _id: string, body: string, description: string, favoritesCount: number, tagList: Array<string | null>, title: string, slug: string, createdAt: string, comments: Array<{ __typename?: 'Comment', _id: string, body: string, createdAt: string, author: { __typename?: 'User', _id: string, image?: string | null, username: string } }> }> };
 
 export type AddFavoriteMutationVariables = Types.Exact<{
   input: Types.Scalars['String'];
 }>;
 
 
-export type AddFavoriteMutation = { __typename?: 'Mutation', addFavorite: { __typename?: 'Article', _id: string, body: string, description: string, favoritesCount: number, tagList: Array<string | null>, title: string, comments: Array<{ __typename?: 'Comment', _id: string, body: string, createdAt: string, author: { __typename?: 'User', _id: string, image?: string | null, username: string } }> } };
+export type AddFavoriteMutation = { __typename?: 'Mutation', addFavorite: { __typename?: 'Article', _id: string, body: string, description: string, favoritesCount: number, tagList: Array<string | null>, title: string, slug: string, createdAt: string, comments: Array<{ __typename?: 'Comment', _id: string, body: string, createdAt: string, author: { __typename?: 'User', _id: string, image?: string | null, username: string } }> } };
 
 export type AddFollowMutationVariables = Types.Exact<{
   input: Types.Scalars['String'];
@@ -39,7 +39,7 @@ export type CreateArticleMutationVariables = Types.Exact<{
 }>;
 
 
-export type CreateArticleMutation = { __typename?: 'Mutation', createArticle: { __typename?: 'Article', _id: string, body: string, description: string, favoritesCount: number, tagList: Array<string | null>, title: string, author: { __typename?: 'User', _id: string, image?: string | null, username: string } } };
+export type CreateArticleMutation = { __typename?: 'Mutation', createArticle: { __typename?: 'Article', _id: string, body: string, description: string, favoritesCount: number, tagList: Array<string | null>, title: string, slug: string, createdAt: string, author: { __typename?: 'User', _id: string, image?: string | null, username: string } } };
 
 export type CreateCommentMutationVariables = Types.Exact<{
   input: Types.CommentCreateInput;
@@ -53,7 +53,7 @@ export type DeleteArticleMutationVariables = Types.Exact<{
 }>;
 
 
-export type DeleteArticleMutation = { __typename?: 'Mutation', deleteArticle: { __typename?: 'Article', _id: string, body: string, description: string, favoritesCount: number, tagList: Array<string | null>, title: string, author: { __typename?: 'User', _id: string, image?: string | null, username: string } } };
+export type DeleteArticleMutation = { __typename?: 'Mutation', deleteArticle: { __typename?: 'Article', _id: string, body: string, description: string, favoritesCount: number, tagList: Array<string | null>, title: string, slug: string, createdAt: string, author: { __typename?: 'User', _id: string, image?: string | null, username: string } } };
 
 export type DeleteCommentMutationVariables = Types.Exact<{
   input: Types.CommentDeleteInput;
@@ -74,7 +74,7 @@ export type RemoveFavoriteMutationVariables = Types.Exact<{
 }>;
 
 
-export type RemoveFavoriteMutation = { __typename?: 'Mutation', removeFavorite: { __typename?: 'Article', _id: string, body: string, description: string, favoritesCount: number, tagList: Array<string | null>, title: string, comments: Array<{ __typename?: 'Comment', _id: string, body: string, createdAt: string, author: { __typename?: 'User', _id: string, image?: string | null, username: string } }> } };
+export type RemoveFavoriteMutation = { __typename?: 'Mutation', removeFavorite: { __typename?: 'Article', _id: string, body: string, description: string, favoritesCount: number, tagList: Array<string | null>, title: string, slug: string, createdAt: string, comments: Array<{ __typename?: 'Comment', _id: string, body: string, createdAt: string, author: { __typename?: 'User', _id: string, image?: string | null, username: string } }> } };
 
 export type RemoveFollowMutationVariables = Types.Exact<{
   input: Types.Scalars['String'];
@@ -88,7 +88,7 @@ export type UpdateArticleMutationVariables = Types.Exact<{
 }>;
 
 
-export type UpdateArticleMutation = { __typename?: 'Mutation', updateArticle: { __typename?: 'Article', _id: string, body: string, description: string, favoritesCount: number, tagList: Array<string | null>, title: string, author: { __typename?: 'User', _id: string, image?: string | null, username: string } } };
+export type UpdateArticleMutation = { __typename?: 'Mutation', updateArticle: { __typename?: 'Article', _id: string, body: string, description: string, favoritesCount: number, tagList: Array<string | null>, title: string, slug: string, createdAt: string, author: { __typename?: 'User', _id: string, image?: string | null, username: string } } };
 
 export type UpdateUserMutationVariables = Types.Exact<{
   input: Types.UserUpdateInput;
@@ -102,12 +102,17 @@ export type ArticlesQueryVariables = Types.Exact<{
 }>;
 
 
-export type ArticlesQuery = { __typename?: 'Query', articles: Array<{ __typename?: 'Article', _id: string, body: string, description: string, favoritesCount: number, tagList: Array<string | null>, title: string, comments: Array<{ __typename?: 'Comment', _id: string, body: string, createdAt: string, author: { __typename?: 'User', _id: string, image?: string | null, username: string } }> } | null> };
+export type ArticlesQuery = { __typename?: 'Query', articles: Array<{ __typename?: 'Article', _id: string, body: string, description: string, favoritesCount: number, tagList: Array<string | null>, title: string, slug: string, createdAt: string, comments: Array<{ __typename?: 'Comment', _id: string, body: string, createdAt: string, author: { __typename?: 'User', _id: string, image?: string | null, username: string } }> } | null> };
+
+export type ArticlesWithAuthorsQueryVariables = Types.Exact<{ [key: string]: never; }>;
+
+
+export type ArticlesWithAuthorsQuery = { __typename?: 'Query', articles: Array<{ __typename?: 'Article', _id: string, body: string, description: string, favoritesCount: number, tagList: Array<string | null>, title: string, slug: string, createdAt: string, author: { __typename?: 'User', _id: string, image?: string | null, username: string } } | null> };
 
 export type MeQueryVariables = Types.Exact<{ [key: string]: never; }>;
 
 
-export type MeQuery = { __typename?: 'Query', me: { __typename?: 'User', _id: string, bio?: string | null, email: string, image?: string | null, username: string, updatedAt: string, feed: Array<{ __typename?: 'Article', _id: string, body: string, description: string, favoritesCount: number, tagList: Array<string | null>, title: string, comments: Array<{ __typename?: 'Comment', _id: string, body: string, createdAt: string, author: { __typename?: 'User', _id: string, image?: string | null, username: string } }> }>, articles: Array<{ __typename?: 'Article', _id: string, body: string, description: string, favoritesCount: number, tagList: Array<string | null>, title: string, comments: Array<{ __typename?: 'Comment', _id: string, body: string, createdAt: string, author: { __typename?: 'User', _id: string, image?: string | null, username: string } }> }> } };
+export type MeQuery = { __typename?: 'Query', me: { __typename?: 'User', _id: string, bio?: string | null, email: string, image?: string | null, username: string, updatedAt: string, feed: Array<{ __typename?: 'Article', _id: string, body: string, description: string, favoritesCount: number, tagList: Array<string | null>, title: string, slug: string, createdAt: string, comments: Array<{ __typename?: 'Comment', _id: string, body: string, createdAt: string, author: { __typename?: 'User', _id: string, image?: string | null, username: string } }> }>, articles: Array<{ __typename?: 'Article', _id: string, body: string, description: string, favoritesCount: number, tagList: Array<string | null>, title: string, slug: string, createdAt: string, comments: Array<{ __typename?: 'Comment', _id: string, body: string, createdAt: string, author: { __typename?: 'User', _id: string, image?: string | null, username: string } }> }> } };
 
 export type UserProfileQueryVariables = Types.Exact<{
   input: Types.Scalars['String'];
@@ -121,18 +126,18 @@ export type UserByEmaildQueryVariables = Types.Exact<{
 }>;
 
 
-export type UserByEmaildQuery = { __typename?: 'Query', user: { __typename?: 'User', _id: string, bio?: string | null, email: string, image?: string | null, username: string, updatedAt: string, articles: Array<{ __typename?: 'Article', _id: string, body: string, description: string, favoritesCount: number, tagList: Array<string | null>, title: string, comments: Array<{ __typename?: 'Comment', _id: string, body: string, createdAt: string, author: { __typename?: 'User', _id: string, image?: string | null, username: string } }> }> } };
+export type UserByEmaildQuery = { __typename?: 'Query', user: { __typename?: 'User', _id: string, bio?: string | null, email: string, image?: string | null, username: string, updatedAt: string, articles: Array<{ __typename?: 'Article', _id: string, body: string, description: string, favoritesCount: number, tagList: Array<string | null>, title: string, slug: string, createdAt: string, comments: Array<{ __typename?: 'Comment', _id: string, body: string, createdAt: string, author: { __typename?: 'User', _id: string, image?: string | null, username: string } }> }> } };
 
 export type UserByIdQueryVariables = Types.Exact<{
   input?: Types.InputMaybe<Types.Scalars['String']>;
 }>;
 
 
-export type UserByIdQuery = { __typename?: 'Query', user: { __typename?: 'User', _id: string, bio?: string | null, email: string, image?: string | null, username: string, updatedAt: string, articles: Array<{ __typename?: 'Article', _id: string, body: string, description: string, favoritesCount: number, tagList: Array<string | null>, title: string, comments: Array<{ __typename?: 'Comment', _id: string, body: string, createdAt: string, author: { __typename?: 'User', _id: string, image?: string | null, username: string } }> }> } };
+export type UserByIdQuery = { __typename?: 'Query', user: { __typename?: 'User', _id: string, bio?: string | null, email: string, image?: string | null, username: string, updatedAt: string, articles: Array<{ __typename?: 'Article', _id: string, body: string, description: string, favoritesCount: number, tagList: Array<string | null>, title: string, slug: string, createdAt: string, comments: Array<{ __typename?: 'Comment', _id: string, body: string, createdAt: string, author: { __typename?: 'User', _id: string, image?: string | null, username: string } }> }> } };
 
 export type UserByUsernameQueryVariables = Types.Exact<{
   input?: Types.InputMaybe<Types.Scalars['String']>;
 }>;
 
 
-export type UserByUsernameQuery = { __typename?: 'Query', user: { __typename?: 'User', _id: string, bio?: string | null, email: string, image?: string | null, username: string, updatedAt: string, articles: Array<{ __typename?: 'Article', _id: string, body: string, description: string, favoritesCount: number, tagList: Array<string | null>, title: string, comments: Array<{ __typename?: 'Comment', _id: string, body: string, createdAt: string, author: { __typename?: 'User', _id: string, image?: string | null, username: string } }> }> } };
+export type UserByUsernameQuery = { __typename?: 'Query', user: { __typename?: 'User', _id: string, bio?: string | null, email: string, image?: string | null, username: string, updatedAt: string, articles: Array<{ __typename?: 'Article', _id: string, body: string, description: string, favoritesCount: number, tagList: Array<string | null>, title: string, slug: string, createdAt: string, comments: Array<{ __typename?: 'Comment', _id: string, body: string, createdAt: string, author: { __typename?: 'User', _id: string, image?: string | null, username: string } }> }> } };

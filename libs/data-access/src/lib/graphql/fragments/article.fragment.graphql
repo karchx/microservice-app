@@ -5,6 +5,8 @@ fragment articleWithComments on Article {
   favoritesCount
   tagList
   title
+  slug
+  createdAt
   comments {
     ...commentWithAuthor
   }
@@ -17,6 +19,8 @@ fragment articleWithAuthor on Article {
   favoritesCount
   tagList
   title
+  slug
+  createdAt
   author {
     ...author
   }
@@ -29,4 +33,6 @@ fragment article on Article {
   favoritesCount
   tagList
   title
+  slug
+  createdAt
 }

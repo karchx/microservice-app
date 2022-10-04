@@ -3,3 +3,9 @@ query articles($input:String) {
      ...articleWithComments
   }
 }
+
+query articlesWithAuthors {
+  articles {
+    ...articleWithAuthor
+  }
+}
