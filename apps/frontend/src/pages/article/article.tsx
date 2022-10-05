@@ -1,8 +1,10 @@
+import { Icon } from '@mui/material';
 import { useParams } from 'react-router-dom';
+import { Form as FormFinal, Field } from 'react-final-form';
 import { format } from 'date-fns';
 import { useArticlesQuery } from '@microservice-app/data-access';
-import { Banner, Button, Link } from '../../components';
-import { Icon } from '@mui/material';
+import { Banner, Button, Form, Link } from '../../components';
+import {TextareaField} from '../../components/Form/TextareaField';
 
 interface ArticleProps {}
 
@@ -18,6 +20,10 @@ export function Article(props: ArticleProps) {
   const formatDate = (date: string): string => {
     return format(new Date(date), 'MMM d, y');
   };
+
+  const onHandlerSubmit = () => {
+    console.log('test');
+  }
 
   return (
     <div>
@@ -75,7 +81,32 @@ export function Article(props: ArticleProps) {
             </div>
 
             <div className="row">
-              <div className="col-xs-12 col-md-8 offset-md-2">F</div>
+              <div className="col-xs-12 col-md-8 offset-md-2">
+                <FormFinal 
+                  onSubmit={onHandlerSubmit}
+                  initialValues={{ comment: '' }}
+                  render={renderProps => (
+                    <Form className="card comment-form">
+                      <Field name="comment">
+                        {({ input }) => (
+                          <>
+                            <div className="card-block">
+                              <TextareaField
+                                className="form-control"
+                                placeholder="Write a comment..."
+                                rows={3}
+                                {...input}
+                              />
+                            </div>
+                          </>
+                        )}
+                      </Field>
+                    </Form>
+                  )}
+                >
+
+                </FormFinal>
+              </div>
             </div>
           </>
         )}
