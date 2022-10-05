@@ -1,6 +1,6 @@
 import * as Types from './types';
 
-// Generated on 2022-10-03T20:42:08-06:00
+// Generated on 2022-10-03T21:20:03-06:00
 
 export type ArticleWithCommentsFragment = { __typename?: 'Article', _id: string, body: string, description: string, favoritesCount: number, tagList: Array<string | null>, title: string, slug: string, createdAt: string, comments: Array<{ __typename?: 'Comment', _id: string, body: string, createdAt: string, author: { __typename?: 'User', _id: string, image?: string | null, username: string } }> };
 
@@ -102,7 +102,7 @@ export type ArticlesQueryVariables = Types.Exact<{
 }>;
 
 
-export type ArticlesQuery = { __typename?: 'Query', articles: Array<{ __typename?: 'Article', _id: string, body: string, description: string, favoritesCount: number, tagList: Array<string | null>, title: string, slug: string, createdAt: string, comments: Array<{ __typename?: 'Comment', _id: string, body: string, createdAt: string, author: { __typename?: 'User', _id: string, image?: string | null, username: string } }> } | null> };
+export type ArticlesQuery = { __typename?: 'Query', articles: Array<{ __typename?: 'Article', _id: string, body: string, description: string, favoritesCount: number, tagList: Array<string | null>, title: string, slug: string, createdAt: string, comments: Array<{ __typename?: 'Comment', _id: string, body: string, createdAt: string, author: { __typename?: 'User', _id: string, image?: string | null, username: string } }>, author: { __typename?: 'User', _id: string, image?: string | null, username: string } } | null> };
 
 export type ArticlesWithAuthorsQueryVariables = Types.Exact<{ [key: string]: never; }>;
 

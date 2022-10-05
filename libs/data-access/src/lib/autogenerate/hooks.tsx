@@ -3,7 +3,7 @@ import * as Types from './operations';
 import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 const defaultOptions = {} as const;
-// Generated on 2022-10-03T20:42:08-06:00
+// Generated on 2022-10-03T21:20:03-06:00
 
 export const AuthorFragmentDoc = gql`
     fragment author on User {
@@ -471,9 +471,11 @@ export const ArticlesDocument = gql`
     query articles($input: String) {
   articles(slug: $input) {
     ...articleWithComments
+    ...articleWithAuthor
   }
 }
-    ${ArticleWithCommentsFragmentDoc}`;
+    ${ArticleWithCommentsFragmentDoc}
+${ArticleWithAuthorFragmentDoc}`;
 
 /**
  * __useArticlesQuery__

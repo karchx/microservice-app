@@ -1,35 +1,41 @@
-import { format } from 'date-fns';
 import { useParams } from 'react-router-dom';
-import { Banner, Link } from '../../components';
-import { useGetArticleBySlug, useGetUserById } from '../../hooks';
+import { format } from 'date-fns';
+import { useArticlesQuery } from '@microservice-app/data-access';
+import { Banner, Button, Link } from '../../components';
+import { Icon } from '@mui/material';
 
 interface ArticleProps {}
 
 export function Article(props: ArticleProps) {
   const { slug } = useParams<{ slug: string }>();
-  const [{ data: articleData, loading: articleLoading }] =
-    useGetArticleBySlug(slug);
 
-  const [{ data: userData }] = useGetUserById({ id: articleData?.authorId });
+  const { data, loading } = useArticlesQuery({ variables: { input: slug } });
 
-  const formatDate = (date: Date): string => {
+  if (!loading && !data) {
+    return null;
+  }
+
+  const formatDate = (date: string): string => {
     return format(new Date(date), 'MMM d, y');
   };
 
   return (
     <div>
       <div className="article-page">
-        {!articleLoading && (
+        {!loading && (
           <>
             <Banner>
-              <h1>{articleData.title}</h1>
+              <h1>{data.articles[0].title}</h1>
               <div className="article-meta">
                 <div className="info">
-                  <Link href={`/${userData?.username}`} className="author">
-                    {userData?.username}
+                  <Link
+                    href={`/${data.articles[0].author.username}`}
+                    className="author"
+                  >
+                    {data.articles[0].author.username}
                   </Link>
                   <span className="date">
-                    {formatDate(articleData.createdAt)}
+                    {formatDate(data.articles[0].createdAt)}
                   </span>
                 </div>
               </div>
@@ -39,11 +45,11 @@ export function Article(props: ArticleProps) {
               <div className="row article-content">
                 <div className="col-md-12">
                   <div>
-                    <p>{articleData.body}</p>
+                    <p>{data.articles[0].body}</p>
                   </div>
 
                   <ul className="tag-list">
-                    {articleData.tagList.map((tag) => (
+                    {data.articles[0].tagList.map((tag) => (
                       <li
                         key={tag}
                         className="tag-default tag-pill tag-outline"
@@ -54,6 +60,22 @@ export function Article(props: ArticleProps) {
                   </ul>
                 </div>
               </div>
+
+              <hr />
+
+              <div className="article-actions">
+                <Button size="sm" className="btn-outline-primary">
+                  <Icon className="ion-heart" />
+                  &nbsp; Favorite Post{' '}
+                  <span className="counter">
+                    ({data.articles[0].favoritesCount})
+                  </span>
+                </Button>
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col-xs-12 col-md-8 offset-md-2">F</div>
             </div>
           </>
         )}
