@@ -4,7 +4,7 @@ import { Form as FormFinal, Field } from 'react-final-form';
 import { format } from 'date-fns';
 import { useArticlesQuery } from '@microservice-app/data-access';
 import { Banner, Button, Form, Link } from '../../components';
-import {TextareaField} from '../../components/Form/TextareaField';
+import { TextareaField } from '../../components/Form/TextareaField';
 
 interface ArticleProps {}
 
@@ -23,7 +23,7 @@ export function Article(props: ArticleProps) {
 
   const onHandlerSubmit = () => {
     console.log('test');
-  }
+  };
 
   return (
     <div>
@@ -82,10 +82,10 @@ export function Article(props: ArticleProps) {
 
             <div className="row">
               <div className="col-xs-12 col-md-8 offset-md-2">
-                <FormFinal 
+                <FormFinal
                   onSubmit={onHandlerSubmit}
                   initialValues={{ comment: '' }}
-                  render={renderProps => (
+                  render={(renderProps) => (
                     <Form className="card comment-form">
                       <Field name="comment">
                         {({ input }) => (
@@ -103,9 +103,7 @@ export function Article(props: ArticleProps) {
                       </Field>
                     </Form>
                   )}
-                >
-
-                </FormFinal>
+                ></FormFinal>
               </div>
             </div>
           </>
