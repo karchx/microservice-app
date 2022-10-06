@@ -1,10 +1,11 @@
-import { Icon } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import { Form as FormFinal, Field } from 'react-final-form';
 import { format } from 'date-fns';
 import { useArticlesQuery } from '@microservice-app/data-access';
 import { Banner, Button, Form, Link } from '../../components';
 import { TextareaField } from '../../components/Form/TextareaField';
+import { useAppSelector } from '../../store/hooks';
+import { Icon } from '../../components/designSystem/Icon';
 
 interface ArticleProps {}
 
@@ -12,6 +13,7 @@ export function Article(props: ArticleProps) {
   const { slug } = useParams<{ slug: string }>();
 
   const { data, loading } = useArticlesQuery({ variables: { input: slug } });
+  const { userData } = useAppSelector((state) => state.auth);
 
   if (!loading && !data) {
     return null;
@@ -111,6 +113,32 @@ export function Article(props: ArticleProps) {
                     </Form>
                   )}
                 />
+
+                {data.articles[0].comments.map((comment) => (
+                  <div className="card" key={comment._id}>
+                    <div className="card-block">
+                      <p className="card-text">{comment.body}</p>
+                    </div>
+
+                    <div className="card-footer">
+                      &nbsp;
+                      <Link
+                        href={`/${comment.author.username}`}
+                        className="comment-author"
+                      >
+                        {comment.author.username}
+                      </Link>
+                      <span className="date-posted">
+                        {formatDate(comment.createdAt)}
+                      </span>
+                      <span className="mod-options">
+                        {comment.author.username === userData.username && (
+                          <Icon className="ion-trash-a" />
+                        )}
+                      </span>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>

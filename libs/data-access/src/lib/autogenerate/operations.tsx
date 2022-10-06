@@ -1,6 +1,6 @@
 import * as Types from './types';
 
-// Generated on 2022-10-05T19:18:48-06:00
+// Generated on 2022-10-05T22:07:06-06:00
 
 export type ArticleWithCommentsFragment = { __typename?: 'Article', _id: string, body: string, description: string, favoritesCount: number, tagList: Array<string | null>, title: string, slug: string, createdAt: string, comments: Array<{ __typename?: 'Comment', _id: string, body: string, createdAt: string, author: { __typename?: 'User', _id: string, image?: string | null, username: string } }> };
 

@@ -1,11 +1,15 @@
 import { useMeQuery } from '@microservice-app/data-access';
-import { Icon } from '@mui/material';
 import { useContext, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ConfigContext } from '../../context/routesContext';
-import { loginStateChangedAction, logoutAction } from '../../store/authStore';
+import {
+  loginStateChangedAction,
+  logoutAction,
+  setUserDetailsAction,
+} from '../../store/authStore';
 import { useAppDispatch } from '../../store/hooks';
 import { Link } from '../designSystem/Link';
+import { Icon } from '../designSystem/Icon';
 
 export interface HeaderProps {}
 
@@ -28,8 +32,15 @@ export function Header(props: HeaderProps) {
   useEffect(() => {
     if (userToken) {
       dispatch(loginStateChangedAction({ isUserLoggedIn: true }));
+      dispatch(
+        setUserDetailsAction({
+          username: data?.me.username,
+          password: '',
+          email: data?.me.email,
+        })
+      );
     }
-  }, [userToken, dispatch]);
+  }, [userToken, dispatch, data]);
 
   const logoutHandler = () => {
     localStorage.removeItem('access_token');
