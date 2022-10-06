@@ -1,14 +1,10 @@
+import { useMeQuery } from '@microservice-app/data-access';
 import { Icon } from '@mui/material';
 import { useContext, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ConfigContext } from '../../context/routesContext';
-import { useUserDetails } from '../../hooks';
-import {
-  loginStateChangedAction,
-  logoutAction,
-  setUserDetailsAction,
-} from '../../store/authStore';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { loginStateChangedAction, logoutAction } from '../../store/authStore';
+import { useAppDispatch } from '../../store/hooks';
 import { Link } from '../designSystem/Link';
 
 export interface HeaderProps {}
@@ -17,13 +13,11 @@ export function Header(props: HeaderProps) {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { pathname } = useLocation();
-  const { userData, isUserLoggedIn } = useAppSelector((state) => state.auth);
   const { clearToken } = useContext(ConfigContext);
 
-  const [{ data: userDataFetched, loading, error }, fetchUserDetails] =
-    useUserDetails();
-
   const userToken = localStorage.getItem('access_token');
+
+  const { data } = useMeQuery();
 
   useEffect(() => {
     if (!userToken) {
@@ -32,22 +26,10 @@ export function Header(props: HeaderProps) {
   }, []);
 
   useEffect(() => {
-    if (userToken || isUserLoggedIn) {
-      // isUserLoggedIn is used to re-render the component via redux after
-      // login.
-      // userToken is used on refresh - token exists but isUserLoggedIn is
-      // false.
-      // user logged in - get details
-      fetchUserDetails();
-    }
-  }, [userToken, isUserLoggedIn, fetchUserDetails]);
-
-  useEffect(() => {
-    if (userDataFetched) {
+    if (userToken) {
       dispatch(loginStateChangedAction({ isUserLoggedIn: true }));
-      dispatch(setUserDetailsAction(userDataFetched));
     }
-  }, [userDataFetched, dispatch]);
+  }, [userToken, dispatch]);
 
   const logoutHandler = () => {
     localStorage.removeItem('access_token');
@@ -91,9 +73,9 @@ export function Header(props: HeaderProps) {
               <li className="nav-item">
                 <Link
                   className="nav-link"
-                  href="{`/profile/${userData?.username}`}"
+                  href={`/profile/${data?.me.username}`}
                 >
-                  {userData?.username}
+                  {data?.me.username}
                 </Link>
               </li>
             </>
