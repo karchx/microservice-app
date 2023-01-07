@@ -1,5 +1,3 @@
-import { JwtAuthGuard } from '@microservice-app/auth';
-import { ProfileDto } from '@microservice-app/models';
 import {
   Controller,
   Delete,
@@ -7,14 +5,20 @@ import {
   Param,
   Post,
   Req,
+  UploadedFile,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { JwtAuthGuard } from '@microservice-app/auth';
+import { ProfileDto } from '@microservice-app/models';
+import {CloudinaryService} from './cloudinary.service';
 
 import { ProfileService } from './profile.service';
 
 @Controller('/profiles')
 export class ProfileController {
-  constructor(private readonly profileService: ProfileService) {}
+  constructor(private readonly profileService: ProfileService, private readonly cloudinaryService: CloudinaryService) {}
 
   /**
    * Returns user profileService
@@ -61,5 +65,11 @@ export class ProfileController {
   @Get('/:username/follows')
   getProfilleFollowedByUser(@Param('username') username: string) {
     return this.profileService.getProfilleFollowedByUser(username);
+  }
+
+  @Post('/test-image')
+  @UseInterceptors(FileInterceptor('file'))
+  uploadImage(@UploadedFile() file: Express.Multer.File) {
+    return this.cloudinaryService.uploadImage(file);
   }
 }

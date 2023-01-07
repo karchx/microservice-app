@@ -10,6 +10,8 @@ import { ProfileController } from './profile.controller';
 import { ProfileService } from './profile.service';
 import { Profile, ProfileSchema } from './schemas/profile.schema';
 import { UserConsumer } from './handlers/user.consumer';
+import { CloudinaryService } from './cloudinary.service';
+import { CloudinaryProvider } from './cloudinary.provider';
 
 @Module({
   imports: [
@@ -38,6 +40,6 @@ import { UserConsumer } from './handlers/user.consumer';
     AuthModule,
   ],
   controllers: [ProfileController],
-  providers: [ProfileService, UserConsumer],
+  providers: [ProfileService, UserConsumer, CloudinaryService, CloudinaryProvider],
 })
 export class AppModule {}

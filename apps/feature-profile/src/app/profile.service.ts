@@ -1,10 +1,10 @@
-import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import {Injectable} from '@nestjs/common';
+import {InjectModel} from '@nestjs/mongoose';
+import {Model} from 'mongoose';
 
-import { FollowOperation, ProfileDto, UserDto } from '@microservice-app/models';
-import { Profile, ProfileDocument } from './schemas/profile.schema';
-import { pull, uniq } from 'lodash';
+import {FollowOperation, ProfileDto, UserDto} from '@microservice-app/models';
+import {Profile, ProfileDocument} from './schemas/profile.schema';
+import {pull, uniq} from 'lodash';
 
 @Injectable()
 export class ProfileService {
@@ -23,7 +23,7 @@ export class ProfileService {
    */
   async findOne(username: string, user: UserDto): Promise<ProfileDto | null> {
     const profile: Profile = await this.profileModel
-      .findOne({ username })
+      .findOne({username})
       .exec();
 
     const following: boolean = profile.followers.includes(user.username);
@@ -38,7 +38,7 @@ export class ProfileService {
   }
 
   async findOneProfile(username: string): Promise<Profile | null> {
-    return await this.profileModel.findOne({ username }).exec();
+    return await this.profileModel.findOne({username}).exec();
   }
 
   async upsert(user: UserDto): Promise<ProfileDto | null> {
@@ -50,9 +50,9 @@ export class ProfileService {
     };
 
     return await this.profileModel.findOneAndUpdate(
-      { username: user.username },
+      {username: user.username},
       update,
-      { new: true, useFindAndModify: false, upsert: true }
+      {new: true, useFindAndModify: false, upsert: true}
     );
   }
 
@@ -62,7 +62,7 @@ export class ProfileService {
     op: FollowOperation
   ): Promise<ProfileDto | null> {
     const profile: Profile = await this.profileModel
-      .findOne({ username })
+      .findOne({username})
       .exec();
 
     const update = {
@@ -80,9 +80,9 @@ export class ProfileService {
     }
 
     const updated = await this.profileModel.findOneAndUpdate(
-      { username },
+      {username},
       update,
-      { new: true, useFindAndModify: false }
+      {new: true, useFindAndModify: false}
     );
     const following: boolean = updated.followers.includes(user.username);
 
@@ -96,6 +96,6 @@ export class ProfileService {
   }
 
   async getProfilleFollowedByUser(username: string): Promise<ProfileDto[]> {
-    return this.profileModel.find({ followers: username }).exec();
+    return this.profileModel.find({followers: username}).exec();
   }
 }
