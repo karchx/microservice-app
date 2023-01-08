@@ -67,7 +67,7 @@ export class ProfileController {
     return this.profileService.getProfilleFollowedByUser(username);
   }
 
-  @Post('/test-image')
+  @Post('/upload-image')
   @UseInterceptors(FileInterceptor('file'))
   uploadImage(@UploadedFile() file: Express.Multer.File) {
     return this.cloudinaryService.uploadImage(file);
